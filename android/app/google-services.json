@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "819587716810",
+    "project_id": "expiry-date-app-b8810",
+    "storage_bucket": "expiry-date-app-b8810.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819587716810:android:270d165967c0aa4b6f8633",
+        "android_client_info": {
+          "package_name": "com.do4mother.expirydate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819587716810-rvs29hk3o7qi78hvhfd8atfqd6p51fel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7rHT9D0fEtViLj8_WtPlOSUeJI_YAFo0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819587716810-rvs29hk3o7qi78hvhfd8atfqd6p51fel.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "819587716810-n40itjs0g8d83n3jkpsad6g5sto9heri.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.expiry"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
