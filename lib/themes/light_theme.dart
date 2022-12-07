@@ -43,6 +43,14 @@ final ligthTheme = ThemeData(
       fontSize: 24,
       fontWeight: FontWeight.w700,
     ),
+    headline5: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+    ),
+    headline6: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+    ),
     bodyText2: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
