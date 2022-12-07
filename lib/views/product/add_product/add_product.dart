@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/widgets/date_picker.dart';
 import 'package:expiry/widgets/field_dropdown.dart';
+import 'package:expiry/widgets/image_picker.dart';
 import 'package:expiry/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -23,6 +24,27 @@ class _AddProductViewState extends State<AddProductView> {
   final picker = ImagePicker();
   bool isSell = false;
   File? image;
+
+  pickImage() async {
+    final result = await showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
+      builder: (context) {
+        return const AppImagePicker();
+      },
+    );
+
+    if (result is XFile) {
+      setState(() {
+        image = File(result.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +75,25 @@ class _AddProductViewState extends State<AddProductView> {
                       height: 150,
                       child: AspectRatio(
                         aspectRatio: 1,
-                        child: MaterialButton(
-                          color: Theme.of(context).colorScheme.primary,
-                          onPressed: () {},
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.add_a_photo_rounded,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: image == null
+                            ? MaterialButton(
+                                color: Theme.of(context).colorScheme.primary,
+                                onPressed: pickImage,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Icon(
+                                  Icons.add_a_photo_rounded,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: pickImage,
+                                child: Image.file(
+                                  image!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                       ),
                     ),
                   ],
