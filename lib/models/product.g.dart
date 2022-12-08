@@ -9,13 +9,23 @@ part of 'product.dart';
 abstract class _$ProductCWProxy {
   Product createdAt(DateTime? createdAt);
 
+  Product descriptions(String? descriptions);
+
   Product expDate(DateTime expDate);
 
   Product id(String id);
 
+  Product isSale(bool isSale);
+
   Product name(String name);
 
-  Product priority(Priority priority);
+  Product photo(String? photo);
+
+  Product placeDetail(String? placeDetail);
+
+  Product price(double? price);
+
+  Product priority(ProductPriority priority);
 
   Product profile(Profile? profile);
 
@@ -29,10 +39,15 @@ abstract class _$ProductCWProxy {
   /// ````
   Product call({
     DateTime? createdAt,
+    String? descriptions,
     DateTime? expDate,
     String? id,
+    bool? isSale,
     String? name,
-    Priority? priority,
+    String? photo,
+    String? placeDetail,
+    double? price,
+    ProductPriority? priority,
     Profile? profile,
     DateTime? updatedAt,
   });
@@ -48,16 +63,32 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
   Product createdAt(DateTime? createdAt) => this(createdAt: createdAt);
 
   @override
+  Product descriptions(String? descriptions) =>
+      this(descriptions: descriptions);
+
+  @override
   Product expDate(DateTime expDate) => this(expDate: expDate);
 
   @override
   Product id(String id) => this(id: id);
 
   @override
+  Product isSale(bool isSale) => this(isSale: isSale);
+
+  @override
   Product name(String name) => this(name: name);
 
   @override
-  Product priority(Priority priority) => this(priority: priority);
+  Product photo(String? photo) => this(photo: photo);
+
+  @override
+  Product placeDetail(String? placeDetail) => this(placeDetail: placeDetail);
+
+  @override
+  Product price(double? price) => this(price: price);
+
+  @override
+  Product priority(ProductPriority priority) => this(priority: priority);
 
   @override
   Product profile(Profile? profile) => this(profile: profile);
@@ -75,9 +106,14 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
   /// ````
   Product call({
     Object? createdAt = const $CopyWithPlaceholder(),
+    Object? descriptions = const $CopyWithPlaceholder(),
     Object? expDate = const $CopyWithPlaceholder(),
     Object? id = const $CopyWithPlaceholder(),
+    Object? isSale = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
+    Object? photo = const $CopyWithPlaceholder(),
+    Object? placeDetail = const $CopyWithPlaceholder(),
+    Object? price = const $CopyWithPlaceholder(),
     Object? priority = const $CopyWithPlaceholder(),
     Object? profile = const $CopyWithPlaceholder(),
     Object? updatedAt = const $CopyWithPlaceholder(),
@@ -87,6 +123,10 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
           ? _value.createdAt
           // ignore: cast_nullable_to_non_nullable
           : createdAt as DateTime?,
+      descriptions: descriptions == const $CopyWithPlaceholder()
+          ? _value.descriptions
+          // ignore: cast_nullable_to_non_nullable
+          : descriptions as String?,
       expDate: expDate == const $CopyWithPlaceholder() || expDate == null
           ? _value.expDate
           // ignore: cast_nullable_to_non_nullable
@@ -95,14 +135,30 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as String,
+      isSale: isSale == const $CopyWithPlaceholder() || isSale == null
+          ? _value.isSale
+          // ignore: cast_nullable_to_non_nullable
+          : isSale as bool,
       name: name == const $CopyWithPlaceholder() || name == null
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
           : name as String,
+      photo: photo == const $CopyWithPlaceholder()
+          ? _value.photo
+          // ignore: cast_nullable_to_non_nullable
+          : photo as String?,
+      placeDetail: placeDetail == const $CopyWithPlaceholder()
+          ? _value.placeDetail
+          // ignore: cast_nullable_to_non_nullable
+          : placeDetail as String?,
+      price: price == const $CopyWithPlaceholder()
+          ? _value.price
+          // ignore: cast_nullable_to_non_nullable
+          : price as double?,
       priority: priority == const $CopyWithPlaceholder() || priority == null
           ? _value.priority
           // ignore: cast_nullable_to_non_nullable
-          : priority as Priority,
+          : priority as ProductPriority,
       profile: profile == const $CopyWithPlaceholder()
           ? _value.profile
           // ignore: cast_nullable_to_non_nullable
@@ -256,6 +312,16 @@ abstract class ProductDocumentReference
     FieldValue nameFieldValue,
     DateTime expDate,
     FieldValue expDateFieldValue,
+    String? placeDetail,
+    FieldValue placeDetailFieldValue,
+    String? descriptions,
+    FieldValue descriptionsFieldValue,
+    double? price,
+    FieldValue priceFieldValue,
+    bool isSale,
+    FieldValue isSaleFieldValue,
+    String? photo,
+    FieldValue photoFieldValue,
   });
 
   /// Updates fields in the current document using the transaction API.
@@ -273,6 +339,16 @@ abstract class ProductDocumentReference
     FieldValue nameFieldValue,
     DateTime expDate,
     FieldValue expDateFieldValue,
+    String? placeDetail,
+    FieldValue placeDetailFieldValue,
+    String? descriptions,
+    FieldValue descriptionsFieldValue,
+    double? price,
+    FieldValue priceFieldValue,
+    bool isSale,
+    FieldValue isSaleFieldValue,
+    String? photo,
+    FieldValue photoFieldValue,
   });
 }
 
@@ -315,6 +391,16 @@ class _$ProductDocumentReference
     FieldValue? nameFieldValue,
     Object? expDate = _sentinel,
     FieldValue? expDateFieldValue,
+    Object? placeDetail = _sentinel,
+    FieldValue? placeDetailFieldValue,
+    Object? descriptions = _sentinel,
+    FieldValue? descriptionsFieldValue,
+    Object? price = _sentinel,
+    FieldValue? priceFieldValue,
+    Object? isSale = _sentinel,
+    FieldValue? isSaleFieldValue,
+    Object? photo = _sentinel,
+    FieldValue? photoFieldValue,
   }) async {
     assert(
       id == _sentinel || idFieldValue == null,
@@ -336,6 +422,26 @@ class _$ProductDocumentReference
       expDate == _sentinel || expDateFieldValue == null,
       "Cannot specify both expDate and expDateFieldValue",
     );
+    assert(
+      placeDetail == _sentinel || placeDetailFieldValue == null,
+      "Cannot specify both placeDetail and placeDetailFieldValue",
+    );
+    assert(
+      descriptions == _sentinel || descriptionsFieldValue == null,
+      "Cannot specify both descriptions and descriptionsFieldValue",
+    );
+    assert(
+      price == _sentinel || priceFieldValue == null,
+      "Cannot specify both price and priceFieldValue",
+    );
+    assert(
+      isSale == _sentinel || isSaleFieldValue == null,
+      "Cannot specify both isSale and isSaleFieldValue",
+    );
+    assert(
+      photo == _sentinel || photoFieldValue == null,
+      "Cannot specify both photo and photoFieldValue",
+    );
     final json = {
       if (id != _sentinel) _$ProductFieldMap['id']!: id as String,
       if (idFieldValue != null) _$ProductFieldMap['id']!: idFieldValue,
@@ -353,6 +459,21 @@ class _$ProductDocumentReference
         _$ProductFieldMap['expDate']!: expDate as DateTime,
       if (expDateFieldValue != null)
         _$ProductFieldMap['expDate']!: expDateFieldValue,
+      if (placeDetail != _sentinel)
+        _$ProductFieldMap['placeDetail']!: placeDetail as String?,
+      if (placeDetailFieldValue != null)
+        _$ProductFieldMap['placeDetail']!: placeDetailFieldValue,
+      if (descriptions != _sentinel)
+        _$ProductFieldMap['descriptions']!: descriptions as String?,
+      if (descriptionsFieldValue != null)
+        _$ProductFieldMap['descriptions']!: descriptionsFieldValue,
+      if (price != _sentinel) _$ProductFieldMap['price']!: price as double?,
+      if (priceFieldValue != null) _$ProductFieldMap['price']!: priceFieldValue,
+      if (isSale != _sentinel) _$ProductFieldMap['isSale']!: isSale as bool,
+      if (isSaleFieldValue != null)
+        _$ProductFieldMap['isSale']!: isSaleFieldValue,
+      if (photo != _sentinel) _$ProductFieldMap['photo']!: photo as String?,
+      if (photoFieldValue != null) _$ProductFieldMap['photo']!: photoFieldValue,
     };
 
     return reference.update(json);
@@ -370,6 +491,16 @@ class _$ProductDocumentReference
     FieldValue? nameFieldValue,
     Object? expDate = _sentinel,
     FieldValue? expDateFieldValue,
+    Object? placeDetail = _sentinel,
+    FieldValue? placeDetailFieldValue,
+    Object? descriptions = _sentinel,
+    FieldValue? descriptionsFieldValue,
+    Object? price = _sentinel,
+    FieldValue? priceFieldValue,
+    Object? isSale = _sentinel,
+    FieldValue? isSaleFieldValue,
+    Object? photo = _sentinel,
+    FieldValue? photoFieldValue,
   }) {
     assert(
       id == _sentinel || idFieldValue == null,
@@ -391,6 +522,26 @@ class _$ProductDocumentReference
       expDate == _sentinel || expDateFieldValue == null,
       "Cannot specify both expDate and expDateFieldValue",
     );
+    assert(
+      placeDetail == _sentinel || placeDetailFieldValue == null,
+      "Cannot specify both placeDetail and placeDetailFieldValue",
+    );
+    assert(
+      descriptions == _sentinel || descriptionsFieldValue == null,
+      "Cannot specify both descriptions and descriptionsFieldValue",
+    );
+    assert(
+      price == _sentinel || priceFieldValue == null,
+      "Cannot specify both price and priceFieldValue",
+    );
+    assert(
+      isSale == _sentinel || isSaleFieldValue == null,
+      "Cannot specify both isSale and isSaleFieldValue",
+    );
+    assert(
+      photo == _sentinel || photoFieldValue == null,
+      "Cannot specify both photo and photoFieldValue",
+    );
     final json = {
       if (id != _sentinel) _$ProductFieldMap['id']!: id as String,
       if (idFieldValue != null) _$ProductFieldMap['id']!: idFieldValue,
@@ -408,6 +559,21 @@ class _$ProductDocumentReference
         _$ProductFieldMap['expDate']!: expDate as DateTime,
       if (expDateFieldValue != null)
         _$ProductFieldMap['expDate']!: expDateFieldValue,
+      if (placeDetail != _sentinel)
+        _$ProductFieldMap['placeDetail']!: placeDetail as String?,
+      if (placeDetailFieldValue != null)
+        _$ProductFieldMap['placeDetail']!: placeDetailFieldValue,
+      if (descriptions != _sentinel)
+        _$ProductFieldMap['descriptions']!: descriptions as String?,
+      if (descriptionsFieldValue != null)
+        _$ProductFieldMap['descriptions']!: descriptionsFieldValue,
+      if (price != _sentinel) _$ProductFieldMap['price']!: price as double?,
+      if (priceFieldValue != null) _$ProductFieldMap['price']!: priceFieldValue,
+      if (isSale != _sentinel) _$ProductFieldMap['isSale']!: isSale as bool,
+      if (isSaleFieldValue != null)
+        _$ProductFieldMap['isSale']!: isSaleFieldValue,
+      if (photo != _sentinel) _$ProductFieldMap['photo']!: photo as String?,
+      if (photoFieldValue != null) _$ProductFieldMap['photo']!: photoFieldValue,
     };
 
     transaction.update(reference, json);
@@ -564,6 +730,61 @@ abstract class ProductQuery
     List<DateTime>? whereIn,
     List<DateTime>? whereNotIn,
   });
+  ProductQuery wherePlaceDetail({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  });
+  ProductQuery whereDescriptions({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  });
+  ProductQuery wherePrice({
+    double? isEqualTo,
+    double? isNotEqualTo,
+    double? isLessThan,
+    double? isLessThanOrEqualTo,
+    double? isGreaterThan,
+    double? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<double?>? whereIn,
+    List<double?>? whereNotIn,
+  });
+  ProductQuery whereIsSale({
+    bool? isEqualTo,
+    bool? isNotEqualTo,
+    bool? isLessThan,
+    bool? isLessThanOrEqualTo,
+    bool? isGreaterThan,
+    bool? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<bool>? whereIn,
+    List<bool>? whereNotIn,
+  });
+  ProductQuery wherePhoto({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  });
 
   ProductQuery orderByDocumentId({
     bool descending = false,
@@ -631,6 +852,66 @@ abstract class ProductQuery
     DateTime startAfter,
     DateTime endAt,
     DateTime endBefore,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  });
+
+  ProductQuery orderByPlaceDetail({
+    bool descending = false,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  });
+
+  ProductQuery orderByDescriptions({
+    bool descending = false,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  });
+
+  ProductQuery orderByPrice({
+    bool descending = false,
+    double? startAt,
+    double? startAfter,
+    double? endAt,
+    double? endBefore,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  });
+
+  ProductQuery orderByIsSale({
+    bool descending = false,
+    bool startAt,
+    bool startAfter,
+    bool endAt,
+    bool endBefore,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  });
+
+  ProductQuery orderByPhoto({
+    bool descending = false,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
     ProductDocumentSnapshot? startAtDocument,
     ProductDocumentSnapshot? endAtDocument,
     ProductDocumentSnapshot? endBeforeDocument,
@@ -945,6 +1226,151 @@ class _$ProductQuery extends QueryReference<Product, ProductQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$ProductFieldMap['expDate']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  ProductQuery wherePlaceDetail({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  }) {
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$ProductFieldMap['placeDetail']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  ProductQuery whereDescriptions({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  }) {
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$ProductFieldMap['descriptions']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  ProductQuery wherePrice({
+    double? isEqualTo,
+    double? isNotEqualTo,
+    double? isLessThan,
+    double? isLessThanOrEqualTo,
+    double? isGreaterThan,
+    double? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<double?>? whereIn,
+    List<double?>? whereNotIn,
+  }) {
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$ProductFieldMap['price']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  ProductQuery whereIsSale({
+    bool? isEqualTo,
+    bool? isNotEqualTo,
+    bool? isLessThan,
+    bool? isLessThanOrEqualTo,
+    bool? isGreaterThan,
+    bool? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<bool>? whereIn,
+    List<bool>? whereNotIn,
+  }) {
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$ProductFieldMap['isSale']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  ProductQuery wherePhoto({
+    String? isEqualTo,
+    String? isNotEqualTo,
+    String? isLessThan,
+    String? isLessThanOrEqualTo,
+    String? isGreaterThan,
+    String? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
+  }) {
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$ProductFieldMap['photo']!,
         isEqualTo: isEqualTo,
         isNotEqualTo: isNotEqualTo,
         isLessThan: isLessThan,
@@ -1391,6 +1817,366 @@ class _$ProductQuery extends QueryReference<Product, ProductQuerySnapshot>
     );
   }
 
+  ProductQuery orderByPlaceDetail({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$ProductFieldMap['placeDetail']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  ProductQuery orderByDescriptions({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$ProductFieldMap['descriptions']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  ProductQuery orderByPrice({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$ProductFieldMap['price']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  ProductQuery orderByIsSale({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$ProductFieldMap['isSale']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
+  ProductQuery orderByPhoto({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    ProductDocumentSnapshot? startAtDocument,
+    ProductDocumentSnapshot? endAtDocument,
+    ProductDocumentSnapshot? endBeforeDocument,
+    ProductDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor.orderBy(_$ProductFieldMap['photo']!,
+        descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$ProductQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     return other is _$ProductQuery &&
@@ -1498,8 +2284,14 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       name: json['name'] as String,
       expDate: const FirestoreDateTimeConverter()
           .fromJson(json['exp_date'] as Timestamp),
-      priority: $enumDecodeNullable(_$PriorityEnumMap, json['priority']) ??
-          Priority.low,
+      priority:
+          $enumDecodeNullable(_$ProductPriorityEnumMap, json['priority']) ??
+              ProductPriority.low,
+      placeDetail: json['place_detail'] as String?,
+      descriptions: json['descriptions'] as String?,
+      price: (json['price'] as num?)?.toDouble(),
+      isSale: json['is_sell'] as bool? ?? false,
+      photo: json['photo'] as String?,
       profile: json['profile'] == null
           ? null
           : Profile.fromJson(json['profile'] as Map<String, dynamic>),
@@ -1512,6 +2304,11 @@ const _$ProductFieldMap = <String, String>{
   'name': 'name',
   'priority': 'priority',
   'expDate': 'exp_date',
+  'placeDetail': 'place_detail',
+  'descriptions': 'descriptions',
+  'price': 'price',
+  'isSale': 'is_sell',
+  'photo': 'photo',
   'profile': 'profile',
 };
 
@@ -1535,8 +2332,13 @@ Map<String, dynamic> _$ProductToJson(Product instance) {
       _$JsonConverterToJson<Timestamp, DateTime>(
           instance.updatedAt, const FirestoreDateTimeConverter().toJson));
   val['name'] = instance.name;
-  val['priority'] = _$PriorityEnumMap[instance.priority]!;
+  val['priority'] = _$ProductPriorityEnumMap[instance.priority]!;
   val['exp_date'] = const FirestoreDateTimeConverter().toJson(instance.expDate);
+  writeNotNull('place_detail', instance.placeDetail);
+  writeNotNull('descriptions', instance.descriptions);
+  writeNotNull('price', instance.price);
+  val['is_sell'] = instance.isSale;
+  writeNotNull('photo', instance.photo);
   writeNotNull('profile', instance.profile?.toJson());
   return val;
 }
@@ -1547,10 +2349,10 @@ Value? _$JsonConverterFromJson<Json, Value>(
 ) =>
     json == null ? null : fromJson(json as Json);
 
-const _$PriorityEnumMap = {
-  Priority.low: 'low',
-  Priority.medium: 'medium',
-  Priority.high: 'high',
+const _$ProductPriorityEnumMap = {
+  ProductPriority.low: 'low',
+  ProductPriority.medium: 'medium',
+  ProductPriority.high: 'high',
 };
 
 Json? _$JsonConverterToJson<Json, Value>(

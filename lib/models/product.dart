@@ -17,9 +17,16 @@ class Product extends Equatable {
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
   final String name;
-  final Priority priority;
+  final ProductPriority priority;
   @JsonKey(name: 'exp_date')
   final DateTime expDate;
+  @JsonKey(name: 'place_detail')
+  final String? placeDetail;
+  final String? descriptions;
+  final double? price;
+  @JsonKey(name: 'is_sell')
+  final bool isSale;
+  final String? photo;
   final Profile? profile;
 
   const Product({
@@ -28,19 +35,34 @@ class Product extends Equatable {
     this.updatedAt,
     required this.name,
     required this.expDate,
-    this.priority = Priority.low,
+    this.priority = ProductPriority.low,
+    this.placeDetail,
+    this.descriptions,
+    this.price,
+    this.isSale = false,
+    this.photo,
     this.profile,
   });
 
   @override
-  List<Object?> get props => [id, createdAt, updatedAt, name, expDate, priority];
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        name,
+        placeDetail,
+        descriptions,
+        expDate,
+        priority,
+        price,
+      ];
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 }
 
-enum Priority { low, medium, high }
+enum ProductPriority { low, medium, high }
 
 @Collection<Product>('products')
 final productRef = ProductCollectionReference();
