@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/product.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/views/product/add_product/cubit/add_product/add_product_cubit.dart';
@@ -55,8 +56,12 @@ class _AddProductViewState extends State<AddProductView> {
       Map<String, dynamic> data = Map.from(_formKey.currentState?.value ?? {});
       data.addAll({'id': ''});
       final product = Product.fromJson(data);
+      final profile = context.read<AuthenticationBloc>().state.profile;
 
-      context.read<AddProductCubit>().addProduct(product: product, file: image);
+      context.read<AddProductCubit>().addProduct(
+            product: product.copyWith(profile: profile, isSale: isSell),
+            file: image,
+          );
     }
   }
 
@@ -162,9 +167,9 @@ class _AddProductViewState extends State<AddProductView> {
                 Visibility(
                   visible: isSell,
                   child: Column(
-                    children: const [
+                    children: [
                       kVerticalMediumBox,
-                      AppTextField(
+                      const AppTextField(
                         name: 'descriptions',
                         title: 'Descriptions',
                         minLines: 2,
@@ -172,9 +177,10 @@ class _AddProductViewState extends State<AddProductView> {
                         keyboardType: TextInputType.multiline,
                       ),
                       AppTextField(
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         name: 'price',
                         title: 'Price',
+                        valueTransformer: (value) => double.tryParse(value ?? '0'),
                       ),
                     ],
                   ),
