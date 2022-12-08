@@ -35,4 +35,8 @@ class ProductRepository {
     updateStreamProduct[getUpdatedIndex] = updatedProduct;
     products.updateList(updateStreamProduct);
   }
+
+  Future<ProductDocumentSnapshot> findProduct(String id) {
+    return productRef.doc(id).get();
+  }
 }
