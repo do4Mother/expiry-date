@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expiry/models/product.dart';
+import 'package:expiry/utils/streamed_list.dart';
 
 class ProductRepository {
+  final products = StreamedList<Product>();
+
   Future<ProductQuerySnapshot> getProducts({String? profileId}) {
     final q = productRef;
 
@@ -14,10 +19,20 @@ class ProductRepository {
 
   Future<void> createProduct(Product product) async {
     final addProduct = await productRef.add(product);
-    return addProduct.update(id: addProduct.id);
+    await addProduct.update(id: addProduct.id);
+
+    // update product stream
+    products.addToList(product.copyWith(id: addProduct.id));
   }
 
-  Future<void> updateProduct(Product product) {
-    return productRef.doc(product.id).set(product.copyWith(updatedAt: DateTime.now()));
+  Future<void> updateProduct(Product product) async {
+    final updatedProduct = product.copyWith(updatedAt: DateTime.now());
+    await productRef.doc(product.id).set(updatedProduct);
+
+    // update product stream
+    var updateStreamProduct = List<Product>.from(products.list);
+    final getUpdatedIndex = updateStreamProduct.indexOf(updatedProduct);
+    updateStreamProduct[getUpdatedIndex] = updatedProduct;
+    products.updateList(updateStreamProduct);
   }
 }
