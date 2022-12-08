@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -33,6 +34,7 @@ class AppDatePicker extends StatelessWidget {
           decoration: InputDecoration(
             hintText: title,
           ),
+          valueTransformer: (value) => Timestamp.fromDate(value ?? DateTime.now()),
         ),
         kVerticalLargeBox,
       ],
