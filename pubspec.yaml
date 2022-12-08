@@ -19,10 +19,12 @@ dependencies:
   equatable: ^2.0.5
   image_picker: ^0.8.6
   cached_network_image: ^3.2.3
+  path: ^1.8.2
   # firebase
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.4
   cloud_firestore: ^4.1.0
+  firebase_storage: ^11.0.6
   cloud_firestore_odm: ^1.0.0-dev.42
   # form builder
   flutter_form_builder: ^7.7.0
