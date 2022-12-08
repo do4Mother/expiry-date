@@ -14,6 +14,7 @@ class AppTextField extends StatelessWidget {
   final String? initialValue;
   final List<FormFieldValidator>? validators;
   final TextInputType? keyboardType;
+  final dynamic Function(String?)? valueTransformer;
 
   const AppTextField({
     super.key,
@@ -25,6 +26,7 @@ class AppTextField extends StatelessWidget {
     this.keyboardType,
     this.info,
     this.initialValue,
+    this.valueTransformer,
   });
 
   @override
@@ -53,6 +55,7 @@ class AppTextField extends StatelessWidget {
           maxLines: maxLines,
           keyboardType: keyboardType ?? TextInputType.text,
           validator: FormBuilderValidators.compose(validators ?? []),
+          valueTransformer: valueTransformer,
         ),
         kVerticalLargeBox,
       ],
