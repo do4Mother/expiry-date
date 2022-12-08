@@ -20,13 +20,17 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   FutureOr<void> _authInitialize(AuthInitialize event, Emitter<AuthenticationState> emit) async {
     try {
+      Profile? profile;
       if (!_profileRepository.isSignedIn()) {
         final user = await _profileRepository.signInAnonymously();
-        final profile = Profile(id: user.user?.uid ?? '', createdAt: DateTime.now());
+        profile = Profile(id: user.user?.uid ?? '', createdAt: DateTime.now());
         await _profileRepository.updateProfile(profile);
+      } else {
+        final getProfile = await _profileRepository.getMyProfile();
+        profile = getProfile.data;
       }
 
-      emit(const AuthenticationLoaded());
+      emit(AuthenticationLoaded(profile: profile));
     } on FirebaseException catch (e) {
       emit(AuthenticationError(message: e.message ?? ''));
     }
