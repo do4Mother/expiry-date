@@ -25,9 +25,16 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
     try {
       final user = _profileRepository.getUserAccount();
       final getProducts = await _productRepository.getProducts(profileId: user?.uid);
-      emit(ListProductLoaded(
-        data: getProducts.docs.map((e) => e.data).toList(),
-      ));
+      final products = getProducts.docs.map((e) => e.data).toList();
+      _productRepository.products.updateList(products);
+      emit(ListProductLoaded(data: products));
+
+      await emit.forEach(
+        _productRepository.products.data,
+        onData: (data) {
+          return ListProductLoaded(data: data);
+        },
+      );
     } on FirebaseException catch (e) {
       emit(ListProductError(message: e.message ?? ''));
     }
