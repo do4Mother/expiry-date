@@ -1,18 +1,24 @@
+import 'package:expiry/models/product.dart';
+import 'package:expiry/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../utils/constant.dart';
 
 class AppProduct extends StatelessWidget {
   const AppProduct({
     Key? key,
+    required this.product,
   }) : super(key: key);
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
-      onTap: () => context.push('/product/abcs'),
+      onTap: () => context.push('/product/${product.id}'),
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,25 +29,31 @@ class AppProduct extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: Image.network(
-                      'https://akcdn.detik.net.id/community/media/visual/2022/11/01/keistimewaan-botol-minum-corkcicle-yang-viral-diburu-orang-kantoran_43.jpeg?w=250&q=',
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: product.id,
+                      child: AppImage(
+                        url: product.photo,
+                        name: product.name,
+                      ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.redAccent,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    child: Text(
-                      'SALE',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                Visibility(
+                  visible: product.isSale,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      child: Text(
+                        'SALE',
+                        style: textTheme.bodySmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
@@ -49,12 +61,12 @@ class AppProduct extends StatelessWidget {
               ],
             ),
             kVerticalTinyBox,
-            const Text('Botol Kecap'),
+            Text(product.name),
             const SizedBox(
               height: 2,
             ),
             Text(
-              '17 Dec 2022',
+              DateFormat('dd MMM yyyy').format(product.expDate),
               style: textTheme.bodySmall,
             ),
           ],

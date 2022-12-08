@@ -72,7 +72,9 @@ class _HomeViewState extends State<HomeView> {
                 padding: kPaddingListView,
                 itemCount: state.data.length,
                 itemBuilder: (context, index) {
-                  return const AppProduct();
+                  return AppProduct(
+                    product: state.data[index],
+                  );
                 },
               );
             }
