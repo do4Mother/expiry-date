@@ -1,14 +1,18 @@
 import 'dart:io';
 
+import 'package:expiry/models/product.dart';
 import 'package:expiry/utils/constant.dart';
+import 'package:expiry/views/product/add_product/cubit/add_product/add_product_cubit.dart';
 import 'package:expiry/widgets/date_picker.dart';
 import 'package:expiry/widgets/field_dropdown.dart';
 import 'package:expiry/widgets/image_picker.dart';
 import 'package:expiry/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:expiry/utils/extension.dart';
 
 class AddProductView extends StatefulWidget {
   static const String routeName = '/add-product';
@@ -20,7 +24,7 @@ class AddProductView extends StatefulWidget {
 }
 
 class _AddProductViewState extends State<AddProductView> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
   final picker = ImagePicker();
   bool isSell = false;
   File? image;
@@ -43,6 +47,16 @@ class _AddProductViewState extends State<AddProductView> {
       setState(() {
         image = File(result.path);
       });
+    }
+  }
+
+  onSave() {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      Map<String, dynamic> data = Map.from(_formKey.currentState?.value ?? {});
+      data.addAll({'id': ''});
+      final product = Product.fromJson(data);
+
+      context.read<AddProductCubit>().addProduct(product: product, file: image);
     }
   }
 
@@ -105,28 +119,20 @@ class _AddProductViewState extends State<AddProductView> {
                   validators: [FormBuilderValidators.required()],
                 ),
                 AppDatePicker(
-                  name: 'expiry',
+                  name: 'exp_date',
                   title: 'Expiry',
                   validators: [FormBuilderValidators.required()],
                 ),
-                const AppFieldDropdown(
+                AppFieldDropdown(
                   name: 'priority',
                   title: 'Priority',
                   info: 'Low: artinya aku sayang nabella\nMedium: artinya juga sayang bella\nHigh: sayang banget nabella xixixixi',
-                  items: [
-                    DropdownMenuItem(
-                      value: 'low',
-                      child: Text('Low'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'medium',
-                      child: Text('Medium'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'high',
-                      child: Text('High'),
-                    ),
-                  ],
+                  items: ProductPriority.values
+                      .map((e) => DropdownMenuItem(
+                            value: e.name,
+                            child: Text(e.name.toCapitalized()),
+                          ))
+                      .toList(),
                 ),
                 const AppTextField(
                   name: 'place_detail',
@@ -174,9 +180,23 @@ class _AddProductViewState extends State<AddProductView> {
                   ),
                 ),
                 kVerticalGiantBox,
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Save'),
+                BlocConsumer<AddProductCubit, AddProductState>(
+                  listener: (context, state) {
+                    if (state is AddProductError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.message)),
+                      );
+                    }
+                    if (state is AddProductLoaded) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: state is AddProductLoading ? null : onSave,
+                      child: const Text('Save'),
+                    );
+                  },
                 ),
               ],
             ),
