@@ -18,10 +18,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     on<AuthInitialize>(_authInitialize);
   }
 
-  FutureOr<void> _authInitialize(AuthInitialize event, Emitter<AuthenticationState> emit) {
+  FutureOr<void> _authInitialize(AuthInitialize event, Emitter<AuthenticationState> emit) async {
     try {
       if (!_profileRepository.isSignedIn()) {
-        _profileRepository.signInAnonymously();
+        final user = await _profileRepository.signInAnonymously();
+        final profile = Profile(id: user.user?.uid ?? '', createdAt: DateTime.now());
+        await _profileRepository.updateProfile(profile);
       }
 
       emit(const AuthenticationLoaded());
