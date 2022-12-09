@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/product.dart';
 import 'package:expiry/utils/constant.dart';
-import 'package:expiry/views/product/add_product/cubit/add_product/add_product_cubit.dart';
+import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
 import 'package:expiry/widgets/date_picker.dart';
 import 'package:expiry/widgets/field_dropdown.dart';
 import 'package:expiry/widgets/image_picker.dart';
@@ -58,7 +58,7 @@ class _AddProductViewState extends State<AddProductView> {
       final product = Product.fromJson(data);
       final profile = context.read<AuthenticationBloc>().state.profile;
 
-      context.read<AddProductCubit>().addProduct(
+      context.read<CRUDProductCubit>().addProduct(
             product: product.copyWith(profile: profile, isSale: isSell),
             file: image,
           );
@@ -186,20 +186,20 @@ class _AddProductViewState extends State<AddProductView> {
                   ),
                 ),
                 kVerticalGiantBox,
-                BlocConsumer<AddProductCubit, AddProductState>(
+                BlocConsumer<CRUDProductCubit, CRUDProductState>(
                   listener: (context, state) {
-                    if (state is AddProductError) {
+                    if (state is CRUDProductError) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.message)),
                       );
                     }
-                    if (state is AddProductLoaded) {
+                    if (state is CRUDProductLoaded) {
                       Navigator.pop(context);
                     }
                   },
                   builder: (context, state) {
                     return ElevatedButton(
-                      onPressed: state is AddProductLoading ? null : onSave,
+                      onPressed: state is CRUDProductLoading ? null : onSave,
                       child: const Text('Save'),
                     );
                   },

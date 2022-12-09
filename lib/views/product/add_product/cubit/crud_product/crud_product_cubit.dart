@@ -7,19 +7,19 @@ import 'package:expiry/repositories/product_repository.dart';
 import 'package:expiry/repositories/storage_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-part 'add_product_state.dart';
+part 'crud_product_state.dart';
 
-class AddProductCubit extends Cubit<AddProductState> {
+class CRUDProductCubit extends Cubit<CRUDProductState> {
   final ProductRepository _productRepository;
   final StorageRepository _storageRepository;
 
-  AddProductCubit({required ProductRepository productRepository, required StorageRepository storageRepository})
+  CRUDProductCubit({required ProductRepository productRepository, required StorageRepository storageRepository})
       : _productRepository = productRepository,
         _storageRepository = storageRepository,
-        super(AddProductInitial());
+        super(CRUDProductInitial());
 
   Future<void> addProduct({required Product product, File? file}) async {
-    emit(AddProductLoading());
+    emit(CRUDProductLoading());
 
     try {
       String? fileUrl;
@@ -33,9 +33,9 @@ class AddProductCubit extends Cubit<AddProductState> {
         photo: fileUrl,
       ));
 
-      emit(AddProductLoaded());
+      emit(CRUDProductLoaded());
     } on FirebaseException catch (e) {
-      emit(AddProductError(message: e.message ?? ''));
+      emit(CRUDProductError(message: e.message ?? ''));
     }
   }
 }
