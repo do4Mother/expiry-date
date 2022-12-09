@@ -1,6 +1,7 @@
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/views/product/product_detail/cubit/cubit/product_detail_cubit.dart';
 import 'package:expiry/views/product/product_detail/widgets/info_tile.dart';
+import 'package:expiry/widgets/error.dart';
 import 'package:expiry/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +22,6 @@ class ProductDetailView extends StatefulWidget {
 class _ProductDetailViewState extends State<ProductDetailView> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -33,91 +33,106 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               );
             }
             if (state is ProductDetailLoaded) {
-              return Stack(
-                children: [
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: Hero(
-                            tag: state.product?.id ?? '',
-                            child: AppImage(
-                              name: state.product?.name,
-                              url: state.product?.photo,
-                            ),
-                          ),
-                        ),
-                        kVerticalMediumBox,
-                        Padding(
-                          padding: kPaddingItemView,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Details',
-                                style: textTheme.headline4,
-                              ),
-                              kVerticalTinyBox,
-                              InfoTile(
-                                title: 'Title',
-                                subtitle: state.product?.name ?? '',
-                                useColumn: true,
-                              ),
-                              InfoTile(
-                                title: 'Expiry Date',
-                                subtitle: DateFormat('dd MMMM yyyy').format(state.product?.expDate ?? DateTime.now()),
-                              ),
-                              InfoTile(
-                                title: 'Priority',
-                                subtitle: (state.product?.priority.name ?? '').toCapitalized(),
-                              ),
-                              InfoTile(
-                                title: 'Place Detail',
-                                subtitle: state.product?.placeDetail ?? '',
-                                hideBorder: true,
-                              ),
-                              Visibility(
-                                visible: state.product?.isSale ?? false,
-                                child: _buildSaleInfo(state.product),
-                              ),
-                              kVerticalGiantBox,
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black54,
-                            offset: Offset(0, -0.5),
-                            blurRadius: 10,
-                          )
-                        ],
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      child: Row(
-                        children: [
-                          const Spacer(),
-                          ElevatedButton(onPressed: () {}, child: const Text('Purchase')),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              if (state.product == null) {
+                return const AppError(
+                  title: 'Sorry, it looks like what you\'re looking for doesn\'t exist',
+                );
+              }
+              return _buildBody(state.product);
+            }
+            if (state is ProductDetailError) {
+              return AppError(
+                title: 'Sorry, it looks like what you\'re looking for doesn\'t exist',
+                subtitle: state.message,
               );
             }
             return const SizedBox();
           },
         ),
+      ),
+    );
+  }
+
+  _buildBody(Product? product) {
+    final textTheme = Theme.of(context).textTheme;
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(bottom: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Hero(
+              tag: product?.id ?? '',
+              child: AppImage(
+                name: product?.name,
+                url: product?.photo,
+              ),
+            ),
+          ),
+          kVerticalMediumBox,
+          Padding(
+            padding: kPaddingItemView,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Details',
+                  style: textTheme.headline4,
+                ),
+                kVerticalTinyBox,
+                InfoTile(
+                  title: 'Title',
+                  subtitle: product?.name ?? '',
+                  useColumn: true,
+                ),
+                InfoTile(
+                  title: 'Expiry Date',
+                  subtitle: DateFormat('dd MMMM yyyy').format(product?.expDate ?? DateTime.now()),
+                ),
+                InfoTile(
+                  title: 'Priority',
+                  subtitle: (product?.priority.name ?? '').toCapitalized(),
+                ),
+                InfoTile(
+                  title: 'Place Detail',
+                  subtitle: product?.placeDetail ?? '',
+                  hideBorder: true,
+                ),
+                Visibility(
+                  visible: product?.isSale ?? false,
+                  child: _buildSaleInfo(product),
+                ),
+                kVerticalGiantBox,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).errorColor,
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          'Remove',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onError,
+                          ),
+                        ),
+                      ),
+                    ),
+                    kHorizontalMediumBox,
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Edit'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
