@@ -42,7 +42,7 @@ void main() {
         when(() => mockProductRepository.products).thenAnswer((_) => StreamedList());
       },
       act: (bloc) => bloc.add(GetListProduct()),
-      expect: () => [const ListProductLoaded(data: [])],
+      expect: () => [isA<ListProductLoaded>().having((p0) => p0.data.first.id, 'id', '123')],
       verify: (bloc) {
         verify(() => mockProductRepository.getProducts()).called(1);
       },
