@@ -7,14 +7,15 @@ import 'package:expiry/utils/streamed_list.dart';
 class ProductRepository {
   final products = StreamedList<Product>();
 
-  Future<ProductQuerySnapshot> getProducts({String? profileId}) {
+  Future<List<Product>> getProducts({String? profileId}) async {
     final q = productRef;
 
     if (profileId != null) {
       q.whereFieldPath(FieldPath.fromString('profile.id'), isEqualTo: profileId);
     }
 
-    return q.get();
+    final getProducts = await q.get();
+    return getProducts.docs.map((e) => e.data).toList();
   }
 
   Future<void> createProduct(Product product) async {
@@ -36,7 +37,8 @@ class ProductRepository {
     products.updateList(updateStreamProduct);
   }
 
-  Future<ProductDocumentSnapshot> findProduct(String id) {
-    return productRef.doc(id).get();
+  Future<Product?> findProduct(String id) async {
+    final getProduct = await productRef.doc(id).get();
+    return getProduct.data;
   }
 }

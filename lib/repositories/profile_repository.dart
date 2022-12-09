@@ -23,8 +23,8 @@ class ProfileRepository {
     return _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
-  Future<ProfileDocumentSnapshot> getMyProfile() {
-    return profileRef.doc(_auth.currentUser?.uid).get();
+  Future<Profile?> getMyProfile() async {
+    return (await profileRef.doc(_auth.currentUser?.uid).get()).data;
   }
 
   User? getUserAccount() {

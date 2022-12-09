@@ -26,8 +26,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         profile = Profile(id: user.user?.uid ?? '', createdAt: DateTime.now());
         await _profileRepository.updateProfile(profile);
       } else {
-        final getProfile = await _profileRepository.getMyProfile();
-        profile = getProfile.data;
+        profile = await _profileRepository.getMyProfile();
       }
 
       emit(AuthenticationLoaded(profile: profile));

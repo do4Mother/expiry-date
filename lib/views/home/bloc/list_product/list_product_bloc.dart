@@ -25,9 +25,8 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
     try {
       final user = _profileRepository.getUserAccount();
       final getProducts = await _productRepository.getProducts(profileId: user?.uid);
-      final products = getProducts.docs.map((e) => e.data).toList();
-      _productRepository.products.updateList(products);
-      emit(ListProductLoaded(data: products));
+      _productRepository.products.updateList(getProducts);
+      emit(ListProductLoaded(data: getProducts));
 
       await emit.forEach(
         _productRepository.products.data,

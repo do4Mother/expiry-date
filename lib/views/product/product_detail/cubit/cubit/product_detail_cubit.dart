@@ -17,7 +17,7 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
     emit(ProductDetailLoading());
     try {
       final product = await _productRepository.findProduct(id);
-      emit(ProductDetailLoaded(product: product.data!));
+      emit(ProductDetailLoaded(product: product!));
     } on FirebaseException catch (e) {
       emit(ProductDetailError(message: e.message ?? ''));
     }
