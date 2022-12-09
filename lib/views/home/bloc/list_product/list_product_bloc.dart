@@ -36,6 +36,8 @@ class ListProductBloc extends Bloc<ListProductEvent, ListProductState> {
       );
     } on FirebaseException catch (e) {
       emit(ListProductError(message: e.message ?? ''));
+    } catch (e) {
+      emit(ListProductError(message: e.toString()));
     }
   }
 }
