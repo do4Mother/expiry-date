@@ -1,7 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:expiry/models/product.dart';
-import 'package:expiry/repositories/product_repository.dart';
-import 'package:expiry/repositories/profile_repository.dart';
 import 'package:expiry/utils/streamed_list.dart';
 import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
