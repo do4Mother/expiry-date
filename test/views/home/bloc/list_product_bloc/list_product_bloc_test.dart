@@ -43,6 +43,9 @@ void main() {
       },
       act: (bloc) => bloc.add(GetListProduct()),
       expect: () => [const ListProductLoaded(data: [])],
+      verify: (bloc) {
+        verify(() => mockProductRepository.getProducts()).called(1);
+      },
     );
 
     blocTest(
@@ -60,6 +63,23 @@ void main() {
       },
       act: (bloc) => bloc.add(GetListProduct()),
       expect: () => [isA<ListProductError>().having((p0) => p0.message, 'error message', 'error')],
+    );
+
+    blocTest(
+      'emit GetListProduct with throwing exception',
+      build: () => listProductBloc,
+      setUp: () {
+        final user = MockUser(uid: '1234');
+        final auth = MockFirebaseAuth(mockUser: user);
+
+        when(() => mockProfileRepository.getUserAccount()).thenAnswer((_) {
+          return auth.currentUser;
+        });
+
+        when(() => mockProductRepository.getProducts()).thenThrow(Exception('error'));
+      },
+      act: (bloc) => bloc.add(GetListProduct()),
+      expect: () => [const ListProductError(message: '')],
     );
   });
 }
