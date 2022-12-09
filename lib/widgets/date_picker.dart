@@ -10,6 +10,7 @@ class AppDatePicker extends StatelessWidget {
   final int? minLines;
   final int? maxLines;
   final List<FormFieldValidator>? validators;
+  final DateTime? initialValue;
 
   const AppDatePicker({
     super.key,
@@ -18,6 +19,7 @@ class AppDatePicker extends StatelessWidget {
     this.minLines,
     this.maxLines,
     this.validators,
+    this.initialValue,
   });
 
   @override
@@ -35,6 +37,7 @@ class AppDatePicker extends StatelessWidget {
             hintText: title,
           ),
           valueTransformer: (value) => Timestamp.fromDate(value ?? DateTime.now()),
+          initialValue: initialValue,
         ),
         kVerticalLargeBox,
       ],

@@ -4,11 +4,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'info_tooltip.dart';
 
-class AppFieldDropdown extends StatelessWidget {
+class AppFieldDropdown<T> extends StatelessWidget {
   final String name;
   final String title;
   final String? info;
-  final List<DropdownMenuItem<dynamic>> items;
+  final List<DropdownMenuItem<T>> items;
+  final T? initialValue;
 
   const AppFieldDropdown({
     super.key,
@@ -16,6 +17,7 @@ class AppFieldDropdown extends StatelessWidget {
     required this.title,
     required this.items,
     this.info,
+    this.initialValue,
   });
 
   @override
@@ -36,8 +38,9 @@ class AppFieldDropdown extends StatelessWidget {
           ],
         ),
         kVerticalTinyBox,
-        FormBuilderDropdown(
+        FormBuilderDropdown<T>(
           name: name,
+          initialValue: initialValue,
           decoration: InputDecoration(hintText: title),
           items: items,
         ),
