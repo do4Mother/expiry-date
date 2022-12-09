@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:expiry/utils/extension.dart';
 
+import '../../../models/product.dart';
+
 class ProductDetailView extends StatefulWidget {
   const ProductDetailView({super.key});
 
@@ -77,18 +79,10 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                 subtitle: state.product?.placeDetail ?? '',
                                 hideBorder: true,
                               ),
-                              kVerticalLargeBox,
-                              Text(
-                                'Sale Details',
-                                style: textTheme.headline4,
+                              Visibility(
+                                visible: state.product?.isSale ?? false,
+                                child: _buildSaleInfo(state.product),
                               ),
-                              kVerticalTinyBox,
-                              const InfoTile(
-                                title: 'Descriptions',
-                                subtitle: 'Lorem ipsum dolor sit amet',
-                                useColumn: true,
-                              ),
-                              const InfoTile(title: 'Price', subtitle: 'Rp. 2000', hideBorder: true),
                               kVerticalGiantBox,
                             ],
                           ),
@@ -125,6 +119,27 @@ class _ProductDetailViewState extends State<ProductDetailView> {
           },
         ),
       ),
+    );
+  }
+
+  Column _buildSaleInfo(Product? product) {
+    final textTheme = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        kVerticalLargeBox,
+        Text(
+          'Sale Details',
+          style: textTheme.headline4,
+        ),
+        kVerticalTinyBox,
+        InfoTile(
+          title: 'Descriptions',
+          subtitle: product?.descriptions ?? '',
+          useColumn: true,
+        ),
+        InfoTile(title: 'Price', subtitle: 'Rp. ${product?.price ?? 0}', hideBorder: true),
+      ],
     );
   }
 }
