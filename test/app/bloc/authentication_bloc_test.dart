@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/profile.dart';
 import 'package:expiry/repositories/profile_repository.dart';
+import 'package:expiry/utils/bloc_helper.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -35,7 +36,8 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(AuthInitialize()),
-      expect: () => [isA<AuthenticationLoaded>().having((state) => state.profile, 'profile', const Profile(id: '1234'))],
+      expect: () =>
+          [isA<StateHelper>().having((p0) => p0.status, 'status', Status.loaded).having((state) => state.data, 'profile', const Profile(id: '1234'))],
       verify: ((_) {
         verify(() => profileRepository.isSignedIn()).called(1);
         verify(() => profileRepository.getMyProfile()).called(1);
@@ -53,8 +55,8 @@ void main() {
       },
       act: (bloc) => bloc.add(AuthInitialize()),
       expect: () => [
-        isA<AuthenticationLoaded>().having(
-          (state) => state.profile?.id,
+        isA<StateHelper>().having(
+          (state) => state.data?.id,
           'profile id',
           '1234',
         )
@@ -75,7 +77,7 @@ void main() {
         );
       },
       act: (bloc) => bloc.add(AuthInitialize()),
-      expect: () => [isA<AuthenticationError>().having((value) => value.message, 'message', 'error')],
+      expect: () => [isA<StateHelper>().having((p0) => p0.status, 'status', Status.error).having((value) => value.message, 'message', 'error')],
       verify: ((_) {
         verify(() => profileRepository.isSignedIn()).called(1);
         verify(() => profileRepository.getMyProfile()).called(1);

@@ -4,21 +4,21 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:expiry/models/profile.dart';
 import 'package:expiry/repositories/profile_repository.dart';
+import 'package:expiry/utils/bloc_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 part 'authentication_event.dart';
-part 'authentication_state.dart';
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, StateHelper<Profile>> {
   final ProfileRepository _profileRepository;
 
   AuthenticationBloc({required ProfileRepository profileRepository})
       : _profileRepository = profileRepository,
-        super(AuthenticationInitial()) {
+        super(const StateHelper()) {
     on<AuthInitialize>(_authInitialize);
   }
 
-  FutureOr<void> _authInitialize(AuthInitialize event, Emitter<AuthenticationState> emit) async {
+  FutureOr<void> _authInitialize(AuthInitialize event, Emitter<StateHelper> emit) async {
     try {
       Profile? profile;
       if (!_profileRepository.isSignedIn()) {
@@ -29,9 +29,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         profile = await _profileRepository.getMyProfile();
       }
 
-      emit(AuthenticationLoaded(profile: profile));
+      emit(state.copyWith(status: Status.loaded, data: profile));
     } on FirebaseException catch (e) {
-      emit(AuthenticationError(message: e.message ?? ''));
+      emit(state.copyWith(status: Status.error, message: e.message ?? ''));
     }
   }
 }
