@@ -2,7 +2,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/profile.dart';
-import 'package:expiry/repositories/profile_repository.dart';
 import 'package:expiry/utils/state_helper.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +11,7 @@ import '../../helper/repositories.dart';
 
 void main() {
   late AuthenticationBloc authenticationBloc;
-  late ProfileRepository profileRepository;
+  late MockProfileRepository profileRepository;
 
   setUp(() {
     profileRepository = MockProfileRepository();
