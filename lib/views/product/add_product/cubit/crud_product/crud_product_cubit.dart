@@ -55,7 +55,6 @@ class CRUDProductCubit extends Cubit<StateHelper<Product>> {
       }
 
       final data = product.copyWith(
-        createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         photo: fileUrl,
       );
