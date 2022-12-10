@@ -32,9 +32,11 @@ class ProductRepository {
 
     // update product stream
     var updateStreamProduct = List<Product>.from(products.list);
-    final getUpdatedIndex = updateStreamProduct.indexOf(updatedProduct);
-    updateStreamProduct[getUpdatedIndex] = updatedProduct;
-    products.updateList(updateStreamProduct);
+    final getUpdatedIndex = updateStreamProduct.indexWhere((element) => element.id == product.id);
+    if (getUpdatedIndex >= 0) {
+      updateStreamProduct[getUpdatedIndex] = updatedProduct;
+      products.updateList(updateStreamProduct);
+    }
   }
 
   Future<Product?> findProduct(String id) async {
