@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/product.dart';
+import 'package:expiry/utils/bloc_helper.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
 import 'package:expiry/widgets/date_picker.dart';
@@ -186,20 +187,22 @@ class _AddProductViewState extends State<AddProductView> {
                   ),
                 ),
                 kVerticalGiantBox,
-                BlocConsumer<CRUDProductCubit, CRUDProductState>(
+                BlocConsumer<CRUDProductCubit, StateHelper<Product>>(
                   listener: (context, state) {
-                    if (state is CRUDProductError) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.message)),
-                      );
-                    }
-                    if (state is CRUDProductLoaded) {
-                      Navigator.pop(context);
-                    }
+                    state.listener(
+                      error: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.message)),
+                        );
+                      },
+                      loaded: () {
+                        Navigator.pop(context);
+                      },
+                    );
                   },
                   builder: (context, state) {
                     return ElevatedButton(
-                      onPressed: state is CRUDProductLoading ? null : onSave,
+                      onPressed: state.status == Status.loading ? null : onSave,
                       child: const Text('Save'),
                     );
                   },
