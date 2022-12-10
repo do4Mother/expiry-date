@@ -1,6 +1,6 @@
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/utils/state_helper.dart';
-import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
+import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/views/product/product_detail/widgets/info_tile.dart';
 import 'package:expiry/widgets/error.dart';
 import 'package:expiry/widgets/image.dart';
@@ -27,7 +27,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: BlocBuilder<CRUDProductCubit, StateHelper<Product>>(
+        child: BlocBuilder<ProductCubit, StateHelper<Product>>(
           builder: (context, state) {
             return state.builder(
               loaded: Visibility(

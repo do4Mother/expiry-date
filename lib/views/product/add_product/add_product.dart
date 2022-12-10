@@ -4,7 +4,7 @@ import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/product.dart';
 import 'package:expiry/utils/state_helper.dart';
 import 'package:expiry/utils/constant.dart';
-import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
+import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/widgets/date_picker.dart';
 import 'package:expiry/widgets/field_dropdown.dart';
 import 'package:expiry/widgets/image_picker.dart';
@@ -59,7 +59,7 @@ class _AddProductViewState extends State<AddProductView> {
       final product = Product.fromJson(data);
       final profile = context.read<AuthenticationBloc>().state.data;
 
-      context.read<CRUDProductCubit>().addProduct(
+      context.read<ProductCubit>().addProduct(
             product: product.copyWith(profile: profile, isSale: isSell),
             file: image,
           );
@@ -187,7 +187,7 @@ class _AddProductViewState extends State<AddProductView> {
                   ),
                 ),
                 kVerticalGiantBox,
-                BlocConsumer<CRUDProductCubit, StateHelper<Product>>(
+                BlocConsumer<ProductCubit, StateHelper<Product>>(
                   listener: (context, state) {
                     state.listener(
                       error: () {

@@ -5,7 +5,7 @@ import 'package:expiry/models/product.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/utils/extension.dart';
 import 'package:expiry/utils/state_helper.dart';
-import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
+import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/widgets/date_picker.dart';
 import 'package:expiry/widgets/error.dart';
 import 'package:expiry/widgets/field_dropdown.dart';
@@ -57,12 +57,12 @@ class _EditProductViewState extends State<EditProductView> {
   onSave() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       Map<String, dynamic> data = Map.from(_formKey.currentState?.value ?? {});
-      final oldProduct = context.read<CRUDProductCubit>().state.data;
+      final oldProduct = context.read<ProductCubit>().state.data;
       data.addAll({'id': oldProduct?.id});
       final product = Product.fromJson(data);
       final profile = context.read<AuthenticationBloc>().state.data;
 
-      context.read<CRUDProductCubit>().updateProduct(
+      context.read<ProductCubit>().updateProduct(
             product: product.copyWith(
               createdAt: oldProduct?.createdAt,
               updatedAt: oldProduct?.updatedAt,
@@ -82,7 +82,7 @@ class _EditProductViewState extends State<EditProductView> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: BlocConsumer<CRUDProductCubit, StateHelper<Product>>(
+        child: BlocConsumer<ProductCubit, StateHelper<Product>>(
           listener: (context, state) {
             state.listener(loaded: () {
               setState(() {
@@ -232,7 +232,7 @@ class _EditProductViewState extends State<EditProductView> {
               ),
             ),
             kVerticalGiantBox,
-            BlocConsumer<CRUDProductCubit, StateHelper<Product>>(
+            BlocConsumer<ProductCubit, StateHelper<Product>>(
               listener: (context, state) {
                 state.listener(
                   error: () {

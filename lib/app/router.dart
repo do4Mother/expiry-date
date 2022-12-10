@@ -4,7 +4,7 @@ import 'package:expiry/repositories/storage_repository.dart';
 import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
 import 'package:expiry/views/home/home.dart';
 import 'package:expiry/views/product/add_product/add_product.dart';
-import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
+import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/views/product/edit_product/edit_product.dart';
 import 'package:expiry/views/product/product_detail/product_detail.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +29,7 @@ final appRouter = GoRouter(routes: [
     path: ProductDetailView.routeName,
     builder: (context, state) {
       return BlocProvider(
-        create: (context) => CRUDProductCubit(
+        create: (context) => ProductCubit(
           productRepository: context.read<ProductRepository>(),
           storageRepository: context.read<StorageRepository>(),
         )..getProduct(state.params['id'] ?? ''),
@@ -40,8 +40,8 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: AddProductView.routeName,
     builder: (context, state) {
-      return BlocProvider<CRUDProductCubit>(
-        create: (context) => CRUDProductCubit(
+      return BlocProvider<ProductCubit>(
+        create: (context) => ProductCubit(
           productRepository: RepositoryProvider.of<ProductRepository>(context),
           storageRepository: RepositoryProvider.of<StorageRepository>(context),
         ),
@@ -52,8 +52,8 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: EditProductView.routeName,
     builder: (context, state) {
-      return BlocProvider<CRUDProductCubit>(
-        create: (context) => CRUDProductCubit(
+      return BlocProvider<ProductCubit>(
+        create: (context) => ProductCubit(
           productRepository: RepositoryProvider.of<ProductRepository>(context),
           storageRepository: RepositoryProvider.of<StorageRepository>(context),
         )..getProduct(state.params['id'] ?? ''),

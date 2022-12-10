@@ -7,11 +7,11 @@ import 'package:expiry/repositories/storage_repository.dart';
 import 'package:expiry/utils/state_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class CRUDProductCubit extends Cubit<StateHelper<Product>> {
+class ProductCubit extends Cubit<StateHelper<Product>> {
   final ProductRepository _productRepository;
   final StorageRepository _storageRepository;
 
-  CRUDProductCubit({required ProductRepository productRepository, required StorageRepository storageRepository})
+  ProductCubit({required ProductRepository productRepository, required StorageRepository storageRepository})
       : _productRepository = productRepository,
         _storageRepository = storageRepository,
         super(const StateHelper());
