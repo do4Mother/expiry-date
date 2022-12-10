@@ -21,6 +21,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final productState = context.watch<ListProductBloc>().state;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expiry Date'),
@@ -36,50 +37,47 @@ class _HomeViewState extends State<HomeView> {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
-            BlocBuilder<ListProductBloc, ListProductState>(
-              builder: (context, state) {
-                if (state is ListProductLoaded && state.data.isEmpty) {
-                  return const SliverToBoxAdapter();
-                }
-                return SliverList(
-                  delegate: SliverChildListDelegate([
-                    kVerticalMediumBox,
-                    Padding(
-                      padding: kPaddingItemView,
-                      child: Text(
-                        'List of items',
-                        style: textTheme.headline4,
-                      ),
-                    )
-                  ]),
-                );
-              },
+            SliverToBoxAdapter(
+              child: productState.builder(
+                loaded: Visibility(
+                  visible: productState.data?.isNotEmpty ?? false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      kVerticalMediumBox,
+                      Padding(
+                        padding: kPaddingItemView,
+                        child: Text(
+                          'List of items',
+                          style: textTheme.headline4,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
           ];
         },
-        body: BlocBuilder<ListProductBloc, ListProductState>(
-          builder: (context, state) {
-            if (state is ListProductLoaded) {
-              if (state.data.isEmpty) {
-                return const NoItems();
-              }
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 8 / 11,
-                  crossAxisSpacing: 8,
-                ),
-                padding: kPaddingListView,
-                itemCount: state.data.length,
-                itemBuilder: (context, index) {
-                  return AppProduct(
-                    product: state.data[index],
-                  );
-                },
-              );
-            }
-            return const SizedBox();
-          },
+        body: productState.builder(
+          loaded: Visibility(
+            visible: productState.data?.isNotEmpty ?? false,
+            replacement: const NoItems(),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 8 / 11,
+                crossAxisSpacing: 8,
+              ),
+              padding: kPaddingListView,
+              itemCount: productState.data?.length ?? 0,
+              itemBuilder: (context, index) {
+                return AppProduct(
+                  product: productState.data![index],
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
