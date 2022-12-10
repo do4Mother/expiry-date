@@ -57,7 +57,7 @@ class _AddProductViewState extends State<AddProductView> {
       Map<String, dynamic> data = Map.from(_formKey.currentState?.value ?? {});
       data.addAll({'id': ''});
       final product = Product.fromJson(data);
-      final profile = context.read<AuthenticationBloc>().state.profile;
+      final profile = context.read<AuthenticationBloc>().state.data;
 
       context.read<CRUDProductCubit>().addProduct(
             product: product.copyWith(profile: profile, isSale: isSell),
