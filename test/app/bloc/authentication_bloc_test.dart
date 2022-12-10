@@ -7,6 +7,7 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../helper/models.dart';
 import '../../helper/repositories.dart';
 
 void main() {
@@ -16,6 +17,7 @@ void main() {
   setUp(() {
     profileRepository = MockProfileRepository();
     authenticationBloc = AuthenticationBloc(profileRepository: profileRepository);
+    registerFallbackValue(FakeProfile());
   });
 
   tearDown(() {
@@ -51,14 +53,39 @@ void main() {
         final user = MockUser(isAnonymous: true, uid: '1234');
         final auth = MockFirebaseAuth(mockUser: user);
         when(() => profileRepository.signInAnonymously()).thenAnswer((_) => auth.signInAnonymously());
+        when(() => profileRepository.updateProfile(any())).thenAnswer((_) async => {});
       },
       act: (bloc) => bloc.add(AuthInitialize()),
       expect: () => [
-        isA<StateHelper>().having(
-          (state) => state.data?.id,
-          'profile id',
-          '1234',
-        )
+        isA<StateHelper>().having((p0) => p0.status, 'status', Status.loaded).having(
+              (state) => state.data?.id,
+              'profile id',
+              '1234',
+            )
+      ],
+      verify: ((_) {
+        verify(() => profileRepository.isSignedIn()).called(1);
+        verify(() => profileRepository.signInAnonymously()).called(1);
+      }),
+    );
+
+    blocTest(
+      'if user not signed in but failed to update profile',
+      build: () => authenticationBloc,
+      setUp: () {
+        when(() => profileRepository.isSignedIn()).thenAnswer((_) => false);
+        final user = MockUser(isAnonymous: true, uid: '1234');
+        final auth = MockFirebaseAuth(mockUser: user);
+        when(() => profileRepository.signInAnonymously()).thenAnswer((_) => auth.signInAnonymously());
+        when(() => profileRepository.updateProfile(any())).thenThrow(FirebaseException(plugin: '', message: 'Failed to update profile'));
+      },
+      act: (bloc) => bloc.add(AuthInitialize()),
+      expect: () => [
+        isA<StateHelper>().having((p0) => p0.status, 'status', Status.error).having(
+              (state) => state.message,
+              'message',
+              'Failed to update profile',
+            )
       ],
       verify: ((_) {
         verify(() => profileRepository.isSignedIn()).called(1);
