@@ -43,4 +43,13 @@ class ProductRepository {
     final getProduct = await productRef.doc(id).get();
     return getProduct.data;
   }
+
+  Future<void> removeProduct(String id) async {
+    await productRef.doc(id).delete();
+
+    // update product stream
+    var updateStreamProduct = List<Product>.from(products.list);
+    updateStreamProduct.removeWhere((element) => element.id == id);
+    products.updateList(updateStreamProduct);
+  }
 }

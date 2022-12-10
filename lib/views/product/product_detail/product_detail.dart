@@ -1,3 +1,5 @@
+import 'package:expiry/repositories/product_repository.dart';
+import 'package:expiry/repositories/storage_repository.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/utils/state_helper.dart';
 import 'package:expiry/views/product/cubit/product/product_cubit.dart';
@@ -22,6 +24,69 @@ class ProductDetailView extends StatefulWidget {
 }
 
 class _ProductDetailViewState extends State<ProductDetailView> {
+  late ProductCubit productCubit;
+
+  onRemove(String id) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BlocListener<ProductCubit, StateHelper<Product>>(
+          bloc: productCubit,
+          listener: (context, state) {
+            state.listener(
+              loaded: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Item removed!')),
+                );
+                context.pop();
+              },
+              error: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message)),
+                );
+              },
+            );
+          },
+          child: AlertDialog(
+            title: const Text('Are you sure delete this item?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  productCubit.removeProduct(id);
+                },
+                child: Text(
+                  'Remove',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    productCubit = ProductCubit(
+      productRepository: context.read<ProductRepository>(),
+      storageRepository: context.read<StorageRepository>(),
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    productCubit.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +178,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).errorColor,
                         ),
-                        onPressed: () {},
+                        onPressed: () => onRemove(product?.id ?? ''),
                         child: Text(
                           'Remove',
                           style: TextStyle(
