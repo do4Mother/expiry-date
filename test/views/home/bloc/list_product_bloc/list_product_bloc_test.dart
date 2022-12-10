@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:expiry/models/product.dart';
+import 'package:expiry/utils/state_helper.dart';
 import 'package:expiry/utils/streamed_list.dart';
 import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
@@ -42,7 +43,7 @@ void main() {
         when(() => mockProductRepository.products).thenAnswer((_) => StreamedList());
       },
       act: (bloc) => bloc.add(GetListProduct()),
-      expect: () => [isA<ListProductLoaded>().having((p0) => p0.data.first.id, 'id', '123')],
+      expect: () => [isA<StateHelper>().having((p0) => p0.status, 'status', Status.loaded).having((p0) => p0.data.first.id, 'id', '123')],
       verify: (bloc) {
         verify(() => mockProductRepository.getProducts()).called(1);
       },
@@ -62,7 +63,7 @@ void main() {
         when(() => mockProductRepository.getProducts()).thenThrow(FirebaseException(plugin: '', message: 'error'));
       },
       act: (bloc) => bloc.add(GetListProduct()),
-      expect: () => [isA<ListProductError>().having((p0) => p0.message, 'error message', 'error')],
+      expect: () => [isA<StateHelper>().having((p0) => p0.status, 'status', Status.error).having((p0) => p0.message, 'error message', 'error')],
     );
 
     blocTest(
@@ -79,7 +80,7 @@ void main() {
         when(() => mockProductRepository.getProducts()).thenThrow(Exception('error'));
       },
       act: (bloc) => bloc.add(GetListProduct()),
-      expect: () => [const ListProductError(message: '')],
+      expect: () => [isA<StateHelper>().having((p0) => p0.status, 'status', Status.error)],
     );
   });
 }
