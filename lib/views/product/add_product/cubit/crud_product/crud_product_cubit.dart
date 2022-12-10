@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:expiry/models/product.dart';
 import 'package:expiry/repositories/product_repository.dart';
 import 'package:expiry/repositories/storage_repository.dart';
-import 'package:expiry/utils/bloc_helper.dart';
+import 'package:expiry/utils/state_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class CRUDProductCubit extends Cubit<StateHelper<Product>> {

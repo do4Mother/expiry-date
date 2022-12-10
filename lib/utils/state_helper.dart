@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-part 'bloc_helper.g.dart';
+part 'state_helper.g.dart';
 
 @CopyWith()
 class StateHelper<T> extends Equatable {

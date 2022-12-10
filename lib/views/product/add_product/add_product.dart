@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/product.dart';
-import 'package:expiry/utils/bloc_helper.dart';
+import 'package:expiry/utils/state_helper.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
 import 'package:expiry/widgets/date_picker.dart';

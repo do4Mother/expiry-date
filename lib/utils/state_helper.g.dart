@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'bloc_helper.dart';
+part of 'state_helper.dart';
 
 // **************************************************************************
 // CopyWithGenerator

@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:expiry/models/profile.dart';
 import 'package:expiry/repositories/profile_repository.dart';
-import 'package:expiry/utils/bloc_helper.dart';
+import 'package:expiry/utils/state_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 part 'authentication_event.dart';
