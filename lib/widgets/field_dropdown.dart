@@ -10,6 +10,7 @@ class AppFieldDropdown<T> extends StatelessWidget {
   final String? info;
   final List<DropdownMenuItem<T>> items;
   final T? initialValue;
+  final dynamic Function(T?)? valueTransformer;
 
   const AppFieldDropdown({
     super.key,
@@ -18,6 +19,7 @@ class AppFieldDropdown<T> extends StatelessWidget {
     required this.items,
     this.info,
     this.initialValue,
+    this.valueTransformer,
   });
 
   @override
@@ -43,6 +45,7 @@ class AppFieldDropdown<T> extends StatelessWidget {
           initialValue: initialValue,
           decoration: InputDecoration(hintText: title),
           items: items,
+          valueTransformer: valueTransformer,
         ),
         kVerticalLargeBox,
       ],
