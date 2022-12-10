@@ -5,6 +5,7 @@ import 'package:expiry/widgets/error.dart';
 import 'package:expiry/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:expiry/utils/extension.dart';
 
@@ -123,7 +124,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     kHorizontalMediumBox,
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => context.go('/edit-product/${product?.id}'),
                         child: const Text('Edit'),
                       ),
                     ),
