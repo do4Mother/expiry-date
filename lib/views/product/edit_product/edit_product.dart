@@ -130,7 +130,7 @@ class _EditProductViewState extends State<EditProductView> {
                   height: 150,
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: image == null
+                    child: image == null && (product?.photo?.isEmpty ?? true)
                         ? MaterialButton(
                             color: Theme.of(context).colorScheme.primary,
                             onPressed: pickImage,
@@ -144,16 +144,14 @@ class _EditProductViewState extends State<EditProductView> {
                           )
                         : GestureDetector(
                             onTap: pickImage,
-                            child: Visibility(
-                              visible: product?.photo?.isNotEmpty ?? false,
-                              replacement: AppImage(
-                                url: product?.photo,
-                              ),
-                              child: Image.file(
-                                image!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                            child: image == null
+                                ? AppImage(
+                                    url: product?.photo,
+                                  )
+                                : Image.file(
+                                    image!,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                   ),
                 ),
