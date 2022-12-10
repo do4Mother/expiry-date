@@ -6,7 +6,6 @@ import 'package:expiry/views/home/home.dart';
 import 'package:expiry/views/product/add_product/add_product.dart';
 import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
 import 'package:expiry/views/product/edit_product/edit_product.dart';
-import 'package:expiry/views/product/product_detail/cubit/cubit/product_detail_cubit.dart';
 import 'package:expiry/views/product/product_detail/product_detail.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,11 +29,12 @@ final appRouter = GoRouter(routes: [
     path: ProductDetailView.routeName,
     builder: (context, state) {
       return BlocProvider(
-        create: (context) => ProductDetailCubit(
+        create: (context) => CRUDProductCubit(
           productRepository: context.read<ProductRepository>(),
+          storageRepository: context.read<StorageRepository>(),
         )..getProduct(state.params['id'] ?? ''),
         child: const ProductDetailView(),
-      );
+      ); 
     },
   ),
   GoRoute(

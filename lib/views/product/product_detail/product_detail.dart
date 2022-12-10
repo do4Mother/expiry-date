@@ -1,5 +1,6 @@
 import 'package:expiry/utils/constant.dart';
-import 'package:expiry/views/product/product_detail/cubit/cubit/product_detail_cubit.dart';
+import 'package:expiry/utils/state_helper.dart';
+import 'package:expiry/views/product/add_product/cubit/crud_product/crud_product_cubit.dart';
 import 'package:expiry/views/product/product_detail/widgets/info_tile.dart';
 import 'package:expiry/widgets/error.dart';
 import 'package:expiry/widgets/image.dart';
@@ -26,28 +27,21 @@ class _ProductDetailViewState extends State<ProductDetailView> {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: BlocBuilder<ProductDetailCubit, ProductDetailState>(
+        child: BlocBuilder<CRUDProductCubit, StateHelper<Product>>(
           builder: (context, state) {
-            if (state is ProductDetailLoading) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            }
-            if (state is ProductDetailLoaded) {
-              if (state.product == null) {
-                return const AppError(
+            return state.builder(
+              loaded: Visibility(
+                visible: state.data != null,
+                replacement: const AppError(
                   title: 'Sorry, it looks like what you\'re looking for doesn\'t exist',
-                );
-              }
-              return _buildBody(state.product);
-            }
-            if (state is ProductDetailError) {
-              return AppError(
+                ),
+                child: _buildBody(state.data),
+              ),
+              error: AppError(
                 title: 'Sorry, it looks like what you\'re looking for doesn\'t exist',
                 subtitle: state.message,
-              );
-            }
-            return const SizedBox();
+              ),
+            );
           },
         ),
       ),
