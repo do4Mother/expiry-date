@@ -18,7 +18,7 @@ class AppProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
-      onTap: () => context.go('/product/${product.id}'),
+      onTap: () => context.push('/product/${product.id}'),
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

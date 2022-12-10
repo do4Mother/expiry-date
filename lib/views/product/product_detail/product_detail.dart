@@ -124,7 +124,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     kHorizontalMediumBox,
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () => context.go('/edit-product/${product?.id}'),
+                        onPressed: () => context.push('/edit-product/${product?.id}'),
                         child: const Text('Edit'),
                       ),
                     ),
