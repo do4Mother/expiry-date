@@ -61,13 +61,20 @@ class _ProductDetailViewState extends State<ProductDetailView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Hero(
-              tag: product?.id ?? '',
-              child: AppImage(
-                name: product?.name,
-                url: product?.photo,
+          Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width / 1.4,
+              ),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Hero(
+                  tag: product?.id ?? '',
+                  child: AppImage(
+                    name: product?.name,
+                    url: product?.photo,
+                  ),
+                ),
               ),
             ),
           ),
