@@ -5,9 +5,7 @@ import 'package:mocktail/mocktail.dart';
 
 class MockProfileRepository extends Mock implements ProfileRepository {
   @override
-  Future<void> updateProfile(Profile profile) {
-    return Future.value();
-  }
+  Future<void> updateProfile(Profile profile) async {}
 }
 
 class MockProductRepository extends Mock implements ProductRepository {}
