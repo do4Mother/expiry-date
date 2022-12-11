@@ -30,7 +30,7 @@ class NoItems extends StatelessWidget {
             ],
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height / 2,
+            top: MediaQuery.of(context).size.height / 2.2,
             left: 0,
             right: 0,
             bottom: 0,
@@ -61,8 +61,8 @@ class PressingButtonArrow extends CustomPainter {
     final arrow = Path()
       ..moveTo(center.dx, 0)
       ..lineTo(center.dx, size.height / 3)
-      ..lineTo(size.width - 32, size.height / 3)
-      ..lineTo(size.width - 32, size.height / 1.8);
+      ..lineTo(size.width - 28, size.height / 3)
+      ..lineTo(size.width - 28, size.height / 1.8);
 
     canvas.drawPath(arrow, arrowPainter);
 
@@ -72,10 +72,10 @@ class PressingButtonArrow extends CustomPainter {
       ..strokeWidth = 2;
 
     final pointerArrow = Path()
-      ..moveTo(size.width - 32, size.height / 1.8)
-      ..lineTo(size.width - 50, size.height / 1.8)
-      ..lineTo(size.width - 32, size.height / 1.5)
-      ..lineTo(size.width - 14, size.height / 1.8)
+      ..moveTo(size.width - 28, size.height / 1.8)
+      ..lineTo(size.width - 46, size.height / 1.8)
+      ..lineTo(size.width - 28, size.height / 1.5)
+      ..lineTo(size.width - 10, size.height / 1.8)
       ..close();
 
     canvas.drawPath(pointerArrow, pointerArrowPainter);
