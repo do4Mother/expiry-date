@@ -8,13 +8,8 @@ class ProductRepository {
   final products = StreamedList<Product>();
 
   Future<List<Product>> getProducts({String? profileId}) async {
-    final q = productRef;
-
-    if (profileId != null) {
-      q.whereFieldPath(FieldPath.fromString('profile.id'), isEqualTo: profileId);
-    }
-
-    final getProducts = await q.get();
+    final ref = productRef;
+    final getProducts = await ref.whereFieldPath(FieldPath.fromString('profile.id'), isEqualTo: profileId).get();
     return getProducts.docs.map((e) => e.data).toList();
   }
 
