@@ -26,7 +26,7 @@ class ProductDetailView extends StatefulWidget {
 class _ProductDetailViewState extends State<ProductDetailView> {
   late ProductCubit productCubit;
 
-  onRemove(String id) {
+  onRemove(Product product) {
     showDialog(
       context: context,
       builder: (context) {
@@ -56,7 +56,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               ),
               TextButton(
                 onPressed: () {
-                  productCubit.removeProduct(id);
+                  productCubit.removeProduct(product);
                 },
                 child: Text(
                   'Remove',
@@ -178,7 +178,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).errorColor,
                         ),
-                        onPressed: () => onRemove(product?.id ?? ''),
+                        onPressed: () => onRemove(product!),
                         child: Text(
                           'Remove',
                           style: TextStyle(
