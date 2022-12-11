@@ -94,7 +94,7 @@ void main() {
     blocTest(
       'with return correct value',
       build: () => productCubit,
-      act: (bloc) => bloc.removeProduct(''),
+      act: (bloc) => bloc.removeProduct(const Product(id: '123')),
       setUp: () {
         when(() => productRepository.removeProduct(any())).thenAnswer((_) async => {});
       },
@@ -107,7 +107,7 @@ void main() {
     blocTest(
       'with seed data and return correct value',
       build: () => productCubit,
-      act: (bloc) => bloc.removeProduct(''),
+      act: (bloc) => bloc.removeProduct(const Product(id: '123')),
       seed: () => const StateHelper<Product>(status: Status.loaded, data: Product(id: '123')),
       setUp: () {
         when(() => productRepository.removeProduct(any())).thenAnswer((_) async => {});
@@ -121,7 +121,7 @@ void main() {
     blocTest(
       'with throw FirebaseException',
       build: () => productCubit,
-      act: (bloc) => bloc.removeProduct(''),
+      act: (bloc) => bloc.removeProduct(const Product(id: '123')),
       setUp: () {
         when(() => productRepository.removeProduct(any())).thenThrow(
           FirebaseException(plugin: '', message: 'failed get product'),
@@ -136,7 +136,7 @@ void main() {
     blocTest(
       'with throw Exception',
       build: () => productCubit,
-      act: (bloc) => bloc.removeProduct(''),
+      act: (bloc) => bloc.removeProduct(const Product(id: '123')),
       setUp: () {
         when(() => productRepository.removeProduct(any())).thenThrow(
           Exception('failed get product'),
