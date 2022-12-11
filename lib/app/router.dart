@@ -2,6 +2,7 @@ import 'package:expiry/repositories/product_repository.dart';
 import 'package:expiry/repositories/profile_repository.dart';
 import 'package:expiry/repositories/storage_repository.dart';
 import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
+import 'package:expiry/views/home/bloc/market/market_bloc.dart';
 import 'package:expiry/views/home/home.dart';
 import 'package:expiry/views/product/add_product/add_product.dart';
 import 'package:expiry/views/product/cubit/product/product_cubit.dart';
@@ -19,6 +20,11 @@ final appRouter = GoRouter(routes: [
           create: (context) => ListProductBloc(
             profileRepository: RepositoryProvider.of<ProfileRepository>(context),
             productRepository: RepositoryProvider.of<ProductRepository>(context),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => MarketBloc(
+            productRepository: context.read<ProductRepository>(),
           ),
         ),
       ],
