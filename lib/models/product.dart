@@ -16,10 +16,10 @@ class Product extends Equatable {
   final DateTime? createdAt;
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
-  final String name;
+  final String? name;
   final ProductPriority priority;
   @JsonKey(name: 'exp_date')
-  final DateTime expDate;
+  final DateTime? expDate;
   @JsonKey(name: 'place_detail')
   final String? placeDetail;
   final String? descriptions;
@@ -33,8 +33,8 @@ class Product extends Equatable {
     required this.id,
     this.createdAt,
     this.updatedAt,
-    required this.name,
-    required this.expDate,
+    this.name,
+    this.expDate,
     this.priority = ProductPriority.low,
     this.placeDetail,
     this.descriptions,

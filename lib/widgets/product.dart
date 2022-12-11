@@ -61,12 +61,12 @@ class AppProduct extends StatelessWidget {
               ],
             ),
             kVerticalTinyBox,
-            Text(product.name),
+            Text(product.name ?? ''),
             const SizedBox(
               height: 2,
             ),
             Text(
-              DateFormat('dd MMM yyyy').format(product.expDate),
+              DateFormat('dd MMM yyyy').format(product.expDate ?? DateTime.now()),
               style: textTheme.bodySmall,
             ),
           ],

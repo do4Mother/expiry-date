@@ -11,13 +11,13 @@ abstract class _$ProductCWProxy {
 
   Product descriptions(String? descriptions);
 
-  Product expDate(DateTime expDate);
+  Product expDate(DateTime? expDate);
 
   Product id(String id);
 
   Product isSale(bool isSale);
 
-  Product name(String name);
+  Product name(String? name);
 
   Product photo(String? photo);
 
@@ -67,7 +67,7 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
       this(descriptions: descriptions);
 
   @override
-  Product expDate(DateTime expDate) => this(expDate: expDate);
+  Product expDate(DateTime? expDate) => this(expDate: expDate);
 
   @override
   Product id(String id) => this(id: id);
@@ -76,7 +76,7 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
   Product isSale(bool isSale) => this(isSale: isSale);
 
   @override
-  Product name(String name) => this(name: name);
+  Product name(String? name) => this(name: name);
 
   @override
   Product photo(String? photo) => this(photo: photo);
@@ -127,10 +127,10 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
           ? _value.descriptions
           // ignore: cast_nullable_to_non_nullable
           : descriptions as String?,
-      expDate: expDate == const $CopyWithPlaceholder() || expDate == null
+      expDate: expDate == const $CopyWithPlaceholder()
           ? _value.expDate
           // ignore: cast_nullable_to_non_nullable
-          : expDate as DateTime,
+          : expDate as DateTime?,
       id: id == const $CopyWithPlaceholder() || id == null
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
@@ -139,10 +139,10 @@ class _$ProductCWProxyImpl implements _$ProductCWProxy {
           ? _value.isSale
           // ignore: cast_nullable_to_non_nullable
           : isSale as bool,
-      name: name == const $CopyWithPlaceholder() || name == null
+      name: name == const $CopyWithPlaceholder()
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
-          : name as String,
+          : name as String?,
       photo: photo == const $CopyWithPlaceholder()
           ? _value.photo
           // ignore: cast_nullable_to_non_nullable
@@ -308,9 +308,9 @@ abstract class ProductDocumentReference
     FieldValue createdAtFieldValue,
     DateTime? updatedAt,
     FieldValue updatedAtFieldValue,
-    String name,
+    String? name,
     FieldValue nameFieldValue,
-    DateTime expDate,
+    DateTime? expDate,
     FieldValue expDateFieldValue,
     String? placeDetail,
     FieldValue placeDetailFieldValue,
@@ -335,9 +335,9 @@ abstract class ProductDocumentReference
     FieldValue createdAtFieldValue,
     DateTime? updatedAt,
     FieldValue updatedAtFieldValue,
-    String name,
+    String? name,
     FieldValue nameFieldValue,
-    DateTime expDate,
+    DateTime? expDate,
     FieldValue expDateFieldValue,
     String? placeDetail,
     FieldValue placeDetailFieldValue,
@@ -453,10 +453,10 @@ class _$ProductDocumentReference
         _$ProductFieldMap['updatedAt']!: updatedAt as DateTime?,
       if (updatedAtFieldValue != null)
         _$ProductFieldMap['updatedAt']!: updatedAtFieldValue,
-      if (name != _sentinel) _$ProductFieldMap['name']!: name as String,
+      if (name != _sentinel) _$ProductFieldMap['name']!: name as String?,
       if (nameFieldValue != null) _$ProductFieldMap['name']!: nameFieldValue,
       if (expDate != _sentinel)
-        _$ProductFieldMap['expDate']!: expDate as DateTime,
+        _$ProductFieldMap['expDate']!: expDate as DateTime?,
       if (expDateFieldValue != null)
         _$ProductFieldMap['expDate']!: expDateFieldValue,
       if (placeDetail != _sentinel)
@@ -553,10 +553,10 @@ class _$ProductDocumentReference
         _$ProductFieldMap['updatedAt']!: updatedAt as DateTime?,
       if (updatedAtFieldValue != null)
         _$ProductFieldMap['updatedAt']!: updatedAtFieldValue,
-      if (name != _sentinel) _$ProductFieldMap['name']!: name as String,
+      if (name != _sentinel) _$ProductFieldMap['name']!: name as String?,
       if (nameFieldValue != null) _$ProductFieldMap['name']!: nameFieldValue,
       if (expDate != _sentinel)
-        _$ProductFieldMap['expDate']!: expDate as DateTime,
+        _$ProductFieldMap['expDate']!: expDate as DateTime?,
       if (expDateFieldValue != null)
         _$ProductFieldMap['expDate']!: expDateFieldValue,
       if (placeDetail != _sentinel)
@@ -716,8 +716,8 @@ abstract class ProductQuery
     String? isGreaterThan,
     String? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
   });
   ProductQuery whereExpDate({
     DateTime? isEqualTo,
@@ -727,8 +727,8 @@ abstract class ProductQuery
     DateTime? isGreaterThan,
     DateTime? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<DateTime>? whereIn,
-    List<DateTime>? whereNotIn,
+    List<DateTime?>? whereIn,
+    List<DateTime?>? whereNotIn,
   });
   ProductQuery wherePlaceDetail({
     String? isEqualTo,
@@ -836,10 +836,10 @@ abstract class ProductQuery
 
   ProductQuery orderByName({
     bool descending = false,
-    String startAt,
-    String startAfter,
-    String endAt,
-    String endBefore,
+    String? startAt,
+    String? startAfter,
+    String? endAt,
+    String? endBefore,
     ProductDocumentSnapshot? startAtDocument,
     ProductDocumentSnapshot? endAtDocument,
     ProductDocumentSnapshot? endBeforeDocument,
@@ -848,10 +848,10 @@ abstract class ProductQuery
 
   ProductQuery orderByExpDate({
     bool descending = false,
-    DateTime startAt,
-    DateTime startAfter,
-    DateTime endAt,
-    DateTime endBefore,
+    DateTime? startAt,
+    DateTime? startAfter,
+    DateTime? endAt,
+    DateTime? endBefore,
     ProductDocumentSnapshot? startAtDocument,
     ProductDocumentSnapshot? endAtDocument,
     ProductDocumentSnapshot? endBeforeDocument,
@@ -1190,8 +1190,8 @@ class _$ProductQuery extends QueryReference<Product, ProductQuerySnapshot>
     String? isGreaterThan,
     String? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<String>? whereIn,
-    List<String>? whereNotIn,
+    List<String?>? whereIn,
+    List<String?>? whereNotIn,
   }) {
     return _$ProductQuery(
       _collection,
@@ -1219,8 +1219,8 @@ class _$ProductQuery extends QueryReference<Product, ProductQuerySnapshot>
     DateTime? isGreaterThan,
     DateTime? isGreaterThanOrEqualTo,
     bool? isNull,
-    List<DateTime>? whereIn,
-    List<DateTime>? whereNotIn,
+    List<DateTime?>? whereIn,
+    List<DateTime?>? whereNotIn,
   }) {
     return _$ProductQuery(
       _collection,
@@ -2281,9 +2281,9 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
           json['created_at'], const FirestoreDateTimeConverter().fromJson),
       updatedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['updated_at'], const FirestoreDateTimeConverter().fromJson),
-      name: json['name'] as String,
-      expDate: const FirestoreDateTimeConverter()
-          .fromJson(json['exp_date'] as Timestamp),
+      name: json['name'] as String?,
+      expDate: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['exp_date'], const FirestoreDateTimeConverter().fromJson),
       priority:
           $enumDecodeNullable(_$ProductPriorityEnumMap, json['priority']) ??
               ProductPriority.low,
@@ -2331,9 +2331,12 @@ Map<String, dynamic> _$ProductToJson(Product instance) {
       'updated_at',
       _$JsonConverterToJson<Timestamp, DateTime>(
           instance.updatedAt, const FirestoreDateTimeConverter().toJson));
-  val['name'] = instance.name;
+  writeNotNull('name', instance.name);
   val['priority'] = _$ProductPriorityEnumMap[instance.priority]!;
-  val['exp_date'] = const FirestoreDateTimeConverter().toJson(instance.expDate);
+  writeNotNull(
+      'exp_date',
+      _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.expDate, const FirestoreDateTimeConverter().toJson));
   writeNotNull('place_detail', instance.placeDetail);
   writeNotNull('descriptions', instance.descriptions);
   writeNotNull('price', instance.price);
