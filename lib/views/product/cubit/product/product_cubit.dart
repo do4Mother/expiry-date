@@ -81,10 +81,13 @@ class ProductCubit extends Cubit<StateHelper<Product>> {
     }
   }
 
-  Future<void> removeProduct(String id) async {
+  Future<void> removeProduct(Product product) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      await _productRepository.removeProduct(id);
+      if (product.photo?.isNotEmpty ?? false) {
+        await _storageRepository.removePhoto(product.photo!);
+      }
+      await _productRepository.removeProduct(product.id);
       emit(state.copyWith(status: Status.loaded));
     } on FirebaseException catch (e) {
       emit(state.copyWith(status: Status.error, message: e.message ?? ''));
