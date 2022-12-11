@@ -178,7 +178,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).errorColor,
                         ),
-                        onPressed: () => onRemove(product!),
+                        onPressed: product != null ? () => onRemove(product) : null,
                         child: Text(
                           'Remove',
                           style: TextStyle(
