@@ -7,9 +7,15 @@ import 'package:expiry/utils/streamed_list.dart';
 class ProductRepository {
   final products = StreamedList<Product>();
 
-  Future<List<Product>> getProducts({String? profileId}) async {
+  Future<List<Product>> getProducts({String? profileId, bool? isSale}) async {
     final ref = productRef;
-    final getProducts = await ref.whereFieldPath(FieldPath.fromString('profile.id'), isEqualTo: profileId).get();
+    var query = ref.whereFieldPath(FieldPath.fromString('profile.id'), isEqualTo: profileId);
+
+    if (isSale != null) {
+      query = query.whereIsSale(isEqualTo: isSale);
+    }
+
+    final getProducts = await query.get();
     return getProducts.docs.map((e) => e.data).toList();
   }
 
