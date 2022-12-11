@@ -19,7 +19,7 @@ final appRouter = GoRouter(routes: [
           create: (context) => ListProductBloc(
             profileRepository: RepositoryProvider.of<ProfileRepository>(context),
             productRepository: RepositoryProvider.of<ProductRepository>(context),
-          )..add(GetListProduct()),
+          ),
         ),
       ],
       child: const HomeView(),
@@ -34,7 +34,7 @@ final appRouter = GoRouter(routes: [
           storageRepository: context.read<StorageRepository>(),
         )..getProduct(state.params['id'] ?? ''),
         child: const ProductDetailView(),
-      ); 
+      );
     },
   ),
   GoRoute(
