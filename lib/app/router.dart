@@ -8,6 +8,7 @@ import 'package:expiry/views/product/add_product/add_product.dart';
 import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/views/product/edit_product/edit_product.dart';
 import 'package:expiry/views/product/product_detail/product_detail.dart';
+import 'package:expiry/views/product/product_sell/product_sell.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -40,6 +41,18 @@ final appRouter = GoRouter(routes: [
           storageRepository: context.read<StorageRepository>(),
         )..getProduct(state.params['id'] ?? ''),
         child: const ProductDetailView(),
+      );
+    },
+  ),
+  GoRoute(
+    path: ProductSellView.routeName,
+    builder: (context, state) {
+      return BlocProvider(
+        create: (context) => ProductCubit(
+          productRepository: context.read<ProductRepository>(),
+          storageRepository: context.read<StorageRepository>(),
+        )..getProduct(state.params['id'] ?? ''),
+        child: const ProductSellView(),
       );
     },
   ),
