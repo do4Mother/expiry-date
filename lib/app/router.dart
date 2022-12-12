@@ -4,6 +4,7 @@ import 'package:expiry/repositories/storage_repository.dart';
 import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
 import 'package:expiry/views/home/bloc/market/market_bloc.dart';
 import 'package:expiry/views/home/home.dart';
+import 'package:expiry/views/login/login.dart';
 import 'package:expiry/views/product/add_product/add_product.dart';
 import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/views/product/edit_product/edit_product.dart';
@@ -78,6 +79,12 @@ final appRouter = GoRouter(routes: [
         )..getProduct(state.params['id'] ?? ''),
         child: const EditProductView(),
       );
+    },
+  ),
+  GoRoute(
+    path: LoginView.routeName,
+    builder: (context, state) {
+      return const LoginView();
     },
   ),
 ]);
