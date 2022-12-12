@@ -12,7 +12,7 @@ class AppTextField extends StatelessWidget {
   final int? maxLines;
   final String? info;
   final String? initialValue;
-  final List<FormFieldValidator>? validators;
+  final List<FormFieldValidator<String>>? validators;
   final TextInputType? keyboardType;
   final dynamic Function(String?)? valueTransformer;
 
