@@ -22,6 +22,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin {
   late TabController tabController;
+  final tooltipKey = GlobalKey<TooltipState>();
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
   @override
   void dispose() {
     tabController.dispose();
+    tooltipKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -53,11 +55,23 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
             BlocBuilder<AuthenticationBloc, StateHelper<Profile>>(
               builder: (context, state) {
                 return state.builder(
-                  loaded: IconButton(
-                    onPressed: () => context.push(LoginView.routeName),
-                    icon: Icon(
-                      Icons.cloud,
-                      color: state.data?.isAnonymous ?? false ? Colors.grey : Colors.green.shade700,
+                  loaded: Tooltip(
+                    key: tooltipKey,
+                    message: 'Save in cloud is active',
+                    triggerMode: TooltipTriggerMode.manual,
+                    showDuration: const Duration(seconds: 3),
+                    child: IconButton(
+                      onPressed: () {
+                        if (state.data != null && state.data!.isAnonymous) {
+                          context.push(LoginView.routeName);
+                        } else {
+                          tooltipKey.currentState?.ensureTooltipVisible();
+                        }
+                      },
+                      icon: Icon(
+                        Icons.cloud,
+                        color: state.data?.isAnonymous ?? false ? Colors.grey : Colors.green.shade700,
+                      ),
                     ),
                   ),
                 );
