@@ -25,7 +25,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, StateHelper<Profile>>
   FutureOr<void> _authInitialize(AuthInitialize event, Emitter<StateHelper> emit) async {
     try {
       Profile? profile;
-      await _profileRepository.logout();
+
       if (!_profileRepository.isSignedIn()) {
         final user = await _profileRepository.signInAnonymously();
         profile = Profile(
