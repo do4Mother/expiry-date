@@ -42,7 +42,7 @@ class _SignUpViewState extends State<SignUpView> {
           Navigator.popUntil(context, (route) => route.isFirst);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Successfully sign up!'),
+              content: Text('Sign up successfully!'),
             ),
           );
         }, error: () {
