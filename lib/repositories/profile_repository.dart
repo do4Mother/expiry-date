@@ -31,6 +31,10 @@ class ProfileRepository {
     return _auth.currentUser;
   }
 
+  Future<void> logout() {
+    return _auth.signOut();
+  }
+
   Future<void> updateProfile(Profile profile) {
     return profileRef.doc(_auth.currentUser?.uid).set(profile.copyWith(updatedAt: DateTime.now()));
   }
