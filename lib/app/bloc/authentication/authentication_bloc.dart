@@ -19,12 +19,13 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, StateHelper<Profile>>
         super(const StateHelper()) {
     on<AuthInitialize>(_authInitialize);
     on<SignUp>(_signUp);
+    on<Login>(_login);
   }
 
   FutureOr<void> _authInitialize(AuthInitialize event, Emitter<StateHelper> emit) async {
     try {
       Profile? profile;
-      
+      await _profileRepository.logout();
       if (!_profileRepository.isSignedIn()) {
         final user = await _profileRepository.signInAnonymously();
         profile = Profile(
@@ -57,6 +58,19 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, StateHelper<Profile>>
       );
 
       await _profileRepository.updateProfile(profile);
+
+      emit(state.copyWith(status: Status.loaded, data: profile));
+    } on FirebaseException catch (e) {
+      emit(state.copyWith(status: Status.error, message: e.message ?? ''));
+    } catch (e) {
+      emit(state.copyWith(status: Status.error, message: e.toString()));
+    }
+  }
+
+  FutureOr<void> _login(Login event, Emitter<StateHelper<Profile>> emit) async {
+    try {
+      await _profileRepository.signInEmailandPassword(event.email, event.password);
+      final profile = await _profileRepository.getMyProfile();
 
       emit(state.copyWith(status: Status.loaded, data: profile));
     } on FirebaseException catch (e) {
