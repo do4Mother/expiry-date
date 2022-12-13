@@ -96,6 +96,7 @@ class _SignUpViewState extends State<SignUpView> {
                 AppTextField(
                   name: 'password',
                   title: 'Password',
+                  obscureText: true,
                   validators: [
                     FormBuilderValidators.required(),
                   ],
