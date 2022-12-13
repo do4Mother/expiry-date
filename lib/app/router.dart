@@ -10,6 +10,7 @@ import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/views/product/edit_product/edit_product.dart';
 import 'package:expiry/views/product/product_detail/product_detail.dart';
 import 'package:expiry/views/product/product_sell/product_sell.dart';
+import 'package:expiry/views/sign-up/sign-up.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -85,6 +86,12 @@ final appRouter = GoRouter(routes: [
     path: LoginView.routeName,
     builder: (context, state) {
       return const LoginView();
+    },
+  ),
+  GoRoute(
+    path: SignUpView.routeName,
+    builder: (context, state) {
+      return const SignUpView();
     },
   ),
 ]);
