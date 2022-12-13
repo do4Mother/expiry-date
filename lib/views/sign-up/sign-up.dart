@@ -99,6 +99,7 @@ class _SignUpViewState extends State<SignUpView> {
                   obscureText: true,
                   validators: [
                     FormBuilderValidators.required(),
+                    FormBuilderValidators.minLength(6),
                   ],
                 ),
                 kVerticalMediumBox,
