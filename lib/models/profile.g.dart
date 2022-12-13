@@ -19,6 +19,8 @@ abstract class _$ProfileCWProxy {
 
   Profile id(String id);
 
+  Profile isAnonymous(bool isAnonymous);
+
   Profile lastName(String? lastName);
 
   Profile updatedAt(DateTime? updatedAt);
@@ -36,6 +38,7 @@ abstract class _$ProfileCWProxy {
     String? firstName,
     Gender? gender,
     String? id,
+    bool? isAnonymous,
     String? lastName,
     DateTime? updatedAt,
   });
@@ -66,6 +69,9 @@ class _$ProfileCWProxyImpl implements _$ProfileCWProxy {
   Profile id(String id) => this(id: id);
 
   @override
+  Profile isAnonymous(bool isAnonymous) => this(isAnonymous: isAnonymous);
+
+  @override
   Profile lastName(String? lastName) => this(lastName: lastName);
 
   @override
@@ -86,6 +92,7 @@ class _$ProfileCWProxyImpl implements _$ProfileCWProxy {
     Object? firstName = const $CopyWithPlaceholder(),
     Object? gender = const $CopyWithPlaceholder(),
     Object? id = const $CopyWithPlaceholder(),
+    Object? isAnonymous = const $CopyWithPlaceholder(),
     Object? lastName = const $CopyWithPlaceholder(),
     Object? updatedAt = const $CopyWithPlaceholder(),
   }) {
@@ -114,6 +121,11 @@ class _$ProfileCWProxyImpl implements _$ProfileCWProxy {
           ? _value.id
           // ignore: cast_nullable_to_non_nullable
           : id as String,
+      isAnonymous:
+          isAnonymous == const $CopyWithPlaceholder() || isAnonymous == null
+              ? _value.isAnonymous
+              // ignore: cast_nullable_to_non_nullable
+              : isAnonymous as bool,
       lastName: lastName == const $CopyWithPlaceholder()
           ? _value.lastName
           // ignore: cast_nullable_to_non_nullable
@@ -269,6 +281,8 @@ abstract class ProfileDocumentReference
     FieldValue lastNameFieldValue,
     DateTime? dateOfBirth,
     FieldValue dateOfBirthFieldValue,
+    bool isAnonymous,
+    FieldValue isAnonymousFieldValue,
     String? email,
     FieldValue emailFieldValue,
   });
@@ -290,6 +304,8 @@ abstract class ProfileDocumentReference
     FieldValue lastNameFieldValue,
     DateTime? dateOfBirth,
     FieldValue dateOfBirthFieldValue,
+    bool isAnonymous,
+    FieldValue isAnonymousFieldValue,
     String? email,
     FieldValue emailFieldValue,
   });
@@ -336,6 +352,8 @@ class _$ProfileDocumentReference
     FieldValue? lastNameFieldValue,
     Object? dateOfBirth = _sentinel,
     FieldValue? dateOfBirthFieldValue,
+    Object? isAnonymous = _sentinel,
+    FieldValue? isAnonymousFieldValue,
     Object? email = _sentinel,
     FieldValue? emailFieldValue,
   }) async {
@@ -364,6 +382,10 @@ class _$ProfileDocumentReference
       "Cannot specify both dateOfBirth and dateOfBirthFieldValue",
     );
     assert(
+      isAnonymous == _sentinel || isAnonymousFieldValue == null,
+      "Cannot specify both isAnonymous and isAnonymousFieldValue",
+    );
+    assert(
       email == _sentinel || emailFieldValue == null,
       "Cannot specify both email and emailFieldValue",
     );
@@ -390,6 +412,10 @@ class _$ProfileDocumentReference
         _$ProfileFieldMap['dateOfBirth']!: dateOfBirth as DateTime?,
       if (dateOfBirthFieldValue != null)
         _$ProfileFieldMap['dateOfBirth']!: dateOfBirthFieldValue,
+      if (isAnonymous != _sentinel)
+        _$ProfileFieldMap['isAnonymous']!: isAnonymous as bool,
+      if (isAnonymousFieldValue != null)
+        _$ProfileFieldMap['isAnonymous']!: isAnonymousFieldValue,
       if (email != _sentinel) _$ProfileFieldMap['email']!: email as String?,
       if (emailFieldValue != null) _$ProfileFieldMap['email']!: emailFieldValue,
     };
@@ -411,6 +437,8 @@ class _$ProfileDocumentReference
     FieldValue? lastNameFieldValue,
     Object? dateOfBirth = _sentinel,
     FieldValue? dateOfBirthFieldValue,
+    Object? isAnonymous = _sentinel,
+    FieldValue? isAnonymousFieldValue,
     Object? email = _sentinel,
     FieldValue? emailFieldValue,
   }) {
@@ -439,6 +467,10 @@ class _$ProfileDocumentReference
       "Cannot specify both dateOfBirth and dateOfBirthFieldValue",
     );
     assert(
+      isAnonymous == _sentinel || isAnonymousFieldValue == null,
+      "Cannot specify both isAnonymous and isAnonymousFieldValue",
+    );
+    assert(
       email == _sentinel || emailFieldValue == null,
       "Cannot specify both email and emailFieldValue",
     );
@@ -465,6 +497,10 @@ class _$ProfileDocumentReference
         _$ProfileFieldMap['dateOfBirth']!: dateOfBirth as DateTime?,
       if (dateOfBirthFieldValue != null)
         _$ProfileFieldMap['dateOfBirth']!: dateOfBirthFieldValue,
+      if (isAnonymous != _sentinel)
+        _$ProfileFieldMap['isAnonymous']!: isAnonymous as bool,
+      if (isAnonymousFieldValue != null)
+        _$ProfileFieldMap['isAnonymous']!: isAnonymousFieldValue,
       if (email != _sentinel) _$ProfileFieldMap['email']!: email as String?,
       if (emailFieldValue != null) _$ProfileFieldMap['email']!: emailFieldValue,
     };
@@ -634,6 +670,17 @@ abstract class ProfileQuery
     List<DateTime?>? whereIn,
     List<DateTime?>? whereNotIn,
   });
+  ProfileQuery whereIsAnonymous({
+    bool? isEqualTo,
+    bool? isNotEqualTo,
+    bool? isLessThan,
+    bool? isLessThanOrEqualTo,
+    bool? isGreaterThan,
+    bool? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<bool>? whereIn,
+    List<bool>? whereNotIn,
+  });
   ProfileQuery whereEmail({
     String? isEqualTo,
     String? isNotEqualTo,
@@ -724,6 +771,18 @@ abstract class ProfileQuery
     DateTime? startAfter,
     DateTime? endAt,
     DateTime? endBefore,
+    ProfileDocumentSnapshot? startAtDocument,
+    ProfileDocumentSnapshot? endAtDocument,
+    ProfileDocumentSnapshot? endBeforeDocument,
+    ProfileDocumentSnapshot? startAfterDocument,
+  });
+
+  ProfileQuery orderByIsAnonymous({
+    bool descending = false,
+    bool startAt,
+    bool startAfter,
+    bool endAt,
+    bool endBefore,
     ProfileDocumentSnapshot? startAtDocument,
     ProfileDocumentSnapshot? endAtDocument,
     ProfileDocumentSnapshot? endBeforeDocument,
@@ -1079,6 +1138,35 @@ class _$ProfileQuery extends QueryReference<Profile, ProfileQuerySnapshot>
       _collection,
       $referenceWithoutCursor: $referenceWithoutCursor.where(
         _$ProfileFieldMap['dateOfBirth']!,
+        isEqualTo: isEqualTo,
+        isNotEqualTo: isNotEqualTo,
+        isLessThan: isLessThan,
+        isLessThanOrEqualTo: isLessThanOrEqualTo,
+        isGreaterThan: isGreaterThan,
+        isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+        isNull: isNull,
+        whereIn: whereIn,
+        whereNotIn: whereNotIn,
+      ),
+      $queryCursor: $queryCursor,
+    );
+  }
+
+  ProfileQuery whereIsAnonymous({
+    bool? isEqualTo,
+    bool? isNotEqualTo,
+    bool? isLessThan,
+    bool? isLessThanOrEqualTo,
+    bool? isGreaterThan,
+    bool? isGreaterThanOrEqualTo,
+    bool? isNull,
+    List<bool>? whereIn,
+    List<bool>? whereNotIn,
+  }) {
+    return _$ProfileQuery(
+      _collection,
+      $referenceWithoutCursor: $referenceWithoutCursor.where(
+        _$ProfileFieldMap['isAnonymous']!,
         isEqualTo: isEqualTo,
         isNotEqualTo: isNotEqualTo,
         isLessThan: isLessThan,
@@ -1626,6 +1714,78 @@ class _$ProfileQuery extends QueryReference<Profile, ProfileQuerySnapshot>
     );
   }
 
+  ProfileQuery orderByIsAnonymous({
+    bool descending = false,
+    Object? startAt = _sentinel,
+    Object? startAfter = _sentinel,
+    Object? endAt = _sentinel,
+    Object? endBefore = _sentinel,
+    ProfileDocumentSnapshot? startAtDocument,
+    ProfileDocumentSnapshot? endAtDocument,
+    ProfileDocumentSnapshot? endBeforeDocument,
+    ProfileDocumentSnapshot? startAfterDocument,
+  }) {
+    final query = $referenceWithoutCursor
+        .orderBy(_$ProfileFieldMap['isAnonymous']!, descending: descending);
+    var queryCursor = $queryCursor;
+
+    if (startAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAt: const [],
+        startAtDocumentSnapshot: startAtDocument.snapshot,
+      );
+    }
+    if (startAfterDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: const [],
+        startAfterDocumentSnapshot: startAfterDocument.snapshot,
+      );
+    }
+    if (endAtDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endAt: const [],
+        endAtDocumentSnapshot: endAtDocument.snapshot,
+      );
+    }
+    if (endBeforeDocument != null) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: const [],
+        endBeforeDocumentSnapshot: endBeforeDocument.snapshot,
+      );
+    }
+
+    if (startAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAt: [...queryCursor.startAt, startAt],
+        startAtDocumentSnapshot: null,
+      );
+    }
+    if (startAfter != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        startAfter: [...queryCursor.startAfter, startAfter],
+        startAfterDocumentSnapshot: null,
+      );
+    }
+    if (endAt != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endAt: [...queryCursor.endAt, endAt],
+        endAtDocumentSnapshot: null,
+      );
+    }
+    if (endBefore != _sentinel) {
+      queryCursor = queryCursor.copyWith(
+        endBefore: [...queryCursor.endBefore, endBefore],
+        endBeforeDocumentSnapshot: null,
+      );
+    }
+
+    return _$ProfileQuery(
+      _collection,
+      $referenceWithoutCursor: query,
+      $queryCursor: queryCursor,
+    );
+  }
+
   ProfileQuery orderByEmail({
     bool descending = false,
     Object? startAt = _sentinel,
@@ -1809,6 +1969,7 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
       email: json['email'] as String?,
       gender:
           $enumDecodeNullable(_$GenderEnumMap, json['gender']) ?? Gender.other,
+      isAnonymous: json['isAnonymous'] as bool? ?? true,
     );
 
 const _$ProfileFieldMap = <String, String>{
@@ -1818,6 +1979,7 @@ const _$ProfileFieldMap = <String, String>{
   'firstName': 'first_name',
   'lastName': 'last_name',
   'dateOfBirth': 'date_of_birth',
+  'isAnonymous': 'isAnonymous',
   'email': 'email',
   'gender': 'gender',
 };
@@ -1847,6 +2009,7 @@ Map<String, dynamic> _$ProfileToJson(Profile instance) {
       'date_of_birth',
       _$JsonConverterToJson<Timestamp, DateTime>(
           instance.dateOfBirth, const FirestoreDateTimeConverter().toJson));
+  val['isAnonymous'] = instance.isAnonymous;
   writeNotNull('email', instance.email);
   val['gender'] = _$GenderEnumMap[instance.gender]!;
   return val;

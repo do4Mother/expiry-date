@@ -21,6 +21,7 @@ class Profile extends Equatable {
   final String? lastName;
   @JsonKey(name: 'date_of_birth')
   final DateTime? dateOfBirth;
+  final bool isAnonymous;
   final String? email;
   final Gender gender;
 
@@ -33,6 +34,7 @@ class Profile extends Equatable {
     this.dateOfBirth,
     this.email,
     this.gender = Gender.other,
+    this.isAnonymous = true,
   });
 
   @override
