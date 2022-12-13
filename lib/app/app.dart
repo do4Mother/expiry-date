@@ -33,6 +33,7 @@ class App extends StatelessWidget {
         child: MaterialApp.router(
           routerConfig: appRouter,
           theme: ligthTheme,
+          debugShowCheckedModeBanner: false,
         ),
       ),
     );
