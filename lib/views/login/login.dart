@@ -1,9 +1,11 @@
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/views/login/widgets/social_button.dart';
+import 'package:expiry/views/sign-up/sign-up.dart';
 import 'package:expiry/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -49,6 +51,7 @@ class _LoginViewState extends State<LoginView> {
               AppTextField(
                 name: 'password',
                 title: 'Password',
+                obscureText: true,
                 validators: [
                   FormBuilderValidators.required(),
                 ],
@@ -82,7 +85,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   const Text('Don\'t have an account?'),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => context.push(SignUpView.routeName),
                     child: const Text(
                       'Sign up',
                       style: TextStyle(fontWeight: FontWeight.w700),
