@@ -67,7 +67,7 @@ class _SignUpViewState extends State<SignUpView> {
                   style: textTheme.headline4,
                 ),
                 Text(
-                  'login easily using email or social media and get a variety of interesting features.',
+                  'sign up and get a variety of interesting features.',
                   style: textTheme.subtitle2,
                 ),
                 kVerticalLargeBox,
