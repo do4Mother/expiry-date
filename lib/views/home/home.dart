@@ -3,8 +3,10 @@ import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
 import 'package:expiry/views/home/tabs/chat.dart';
 import 'package:expiry/views/home/tabs/home.dart';
 import 'package:expiry/views/home/tabs/market.dart';
+import 'package:expiry/views/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/bloc/authentication/authentication_bloc.dart';
 import '../../models/profile.dart';
@@ -48,12 +50,18 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
         appBar: AppBar(
           title: const Text('Expiry Date'),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.cloud,
-                color: Colors.green.shade700,
-              ),
+            BlocBuilder<AuthenticationBloc, StateHelper<Profile>>(
+              builder: (context, state) {
+                return state.builder(
+                  loaded: IconButton(
+                    onPressed: () => context.push(LoginView.routeName),
+                    icon: Icon(
+                      Icons.cloud,
+                      color: state.data?.isAnonymous ?? false ? Colors.grey : Colors.green.shade700,
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
