@@ -35,6 +35,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final state = context.watch<LoginCubit>().state;
     return BlocListener<LoginCubit, StateHelper<Profile>>(
       listener: (context, state) {
         state.listener(loaded: () {
@@ -88,13 +89,9 @@ class _LoginViewState extends State<LoginView> {
                   ],
                 ),
                 kVerticalMediumBox,
-                BlocBuilder<LoginCubit, StateHelper<Profile>>(
-                  builder: (context, state) {
-                    return ElevatedButton(
-                      onPressed: state.status != Status.loading ? onLogin : null,
-                      child: const Text('Login'),
-                    );
-                  },
+                ElevatedButton(
+                  onPressed: state.status != Status.loading ? onLogin : null,
+                  child: const Text('Login'),
                 ),
                 kVerticalMediumBox,
                 Center(
@@ -106,13 +103,13 @@ class _LoginViewState extends State<LoginView> {
                 kVerticalMediumBox,
                 SocialButton(
                   name: 'Google',
-                  onPressed: () {},
+                  onPressed: state.status != Status.loading ? () => context.read<LoginCubit>().signInGoogle() : null,
                   image: Image.asset('assets/images/google-logo.png'),
                 ),
                 kVerticalSmallBox,
                 SocialButton(
                   name: 'Facebook',
-                  onPressed: () {},
+                  onPressed: state.status != Status.loading ? onLogin : null,
                   image: Image.asset('assets/images/facebook-logo.png'),
                 ),
                 kVerticalMediumBox,
