@@ -2,6 +2,7 @@ import 'package:expiry/app/bloc/authentication/authentication_bloc.dart';
 import 'package:expiry/models/profile.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/utils/state_helper.dart';
+import 'package:expiry/views/sign-up/cubit/signup/signup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -26,19 +27,17 @@ class _SignUpViewState extends State<SignUpView> {
       Map<String, dynamic> data = Map.from(_formKey.currentState?.value ?? {});
       data.addAll({'id': ''});
       final profile = Profile.fromJson(data);
-      context.read<AuthenticationBloc>().add(SignUp(
-            profile: profile,
-            password: data['password'] ?? '',
-          ));
+      context.read<SignUpCubit>().signUp(profile, data['password']);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return BlocListener<AuthenticationBloc, StateHelper<Profile>>(
+    return BlocListener<SignUpCubit, StateHelper<Profile>>(
       listener: (context, state) {
         state.listener(loaded: () {
+          context.read<AuthenticationBloc>().add(UpdateProfile(profile: state.data!));
           Navigator.popUntil(context, (route) => route.isFirst);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -103,7 +102,7 @@ class _SignUpViewState extends State<SignUpView> {
                   ],
                 ),
                 kVerticalMediumBox,
-                BlocBuilder<AuthenticationBloc, StateHelper<Profile>>(
+                BlocBuilder<SignUpCubit, StateHelper<Profile>>(
                   builder: (context, state) {
                     return ElevatedButton(
                       onPressed: state.status != Status.loading ? onSignUp : null,

@@ -4,12 +4,14 @@ import 'package:expiry/repositories/storage_repository.dart';
 import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
 import 'package:expiry/views/home/bloc/market/market_bloc.dart';
 import 'package:expiry/views/home/home.dart';
+import 'package:expiry/views/login/cubit/login/login_cubit.dart';
 import 'package:expiry/views/login/login.dart';
 import 'package:expiry/views/product/add_product/add_product.dart';
 import 'package:expiry/views/product/cubit/product/product_cubit.dart';
 import 'package:expiry/views/product/edit_product/edit_product.dart';
 import 'package:expiry/views/product/product_detail/product_detail.dart';
 import 'package:expiry/views/product/product_sell/product_sell.dart';
+import 'package:expiry/views/sign-up/cubit/signup/signup_cubit.dart';
 import 'package:expiry/views/sign-up/sign-up.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -85,13 +87,19 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: LoginView.routeName,
     builder: (context, state) {
-      return const LoginView();
+      return BlocProvider(
+        create: (context) => LoginCubit(profileRepository: context.read<ProfileRepository>()),
+        child: const LoginView(),
+      );
     },
   ),
   GoRoute(
     path: SignUpView.routeName,
     builder: (context, state) {
-      return const SignUpView();
+      return BlocProvider(
+        create: (context) => SignUpCubit(profileRepository: context.read<ProfileRepository>()),
+        child: const SignUpView(),
+      );
     },
   ),
 ]);

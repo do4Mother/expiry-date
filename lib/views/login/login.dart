@@ -1,6 +1,7 @@
 import 'package:expiry/models/profile.dart';
 import 'package:expiry/utils/constant.dart';
 import 'package:expiry/utils/state_helper.dart';
+import 'package:expiry/views/login/cubit/login/login_cubit.dart';
 import 'package:expiry/views/login/widgets/social_button.dart';
 import 'package:expiry/views/sign-up/sign-up.dart';
 import 'package:expiry/widgets/text_field.dart';
@@ -27,18 +28,17 @@ class _LoginViewState extends State<LoginView> {
   onLogin() {
     if (_formKey.currentState?.saveAndValidate() ?? false) {
       final data = _formKey.currentState?.value ?? {};
-      context.read<AuthenticationBloc>().add(
-            Login(email: data['email'], password: data['password']),
-          );
+      context.read<LoginCubit>().login(data['email'], data['password']);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return BlocListener<AuthenticationBloc, StateHelper<Profile>>(
+    return BlocListener<LoginCubit, StateHelper<Profile>>(
       listener: (context, state) {
         state.listener(loaded: () {
+          context.read<AuthenticationBloc>().add(UpdateProfile(profile: state.data!));
           Navigator.popUntil(context, (route) => route.isFirst);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -88,7 +88,7 @@ class _LoginViewState extends State<LoginView> {
                   ],
                 ),
                 kVerticalMediumBox,
-                BlocBuilder<AuthenticationBloc, StateHelper<Profile>>(
+                BlocBuilder<LoginCubit, StateHelper<Profile>>(
                   builder: (context, state) {
                     return ElevatedButton(
                       onPressed: state.status != Status.loading ? onLogin : null,

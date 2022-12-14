@@ -9,22 +9,11 @@ abstract class AuthenticationEvent extends Equatable {
 
 class AuthInitialize extends AuthenticationEvent {}
 
-class SignUp extends AuthenticationEvent {
+class UpdateProfile extends AuthenticationEvent {
   final Profile profile;
-  final String password;
 
-  const SignUp({required this.profile, required this.password});
-
-  @override
-  List<Object> get props => [profile, password];
-}
-
-class Login extends AuthenticationEvent {
-  final String email;
-  final String password;
-
-  const Login({required this.email, required this.password});
+  const UpdateProfile({required this.profile});
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [profile];
 }
