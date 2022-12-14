@@ -34,9 +34,11 @@ class LoginCubit extends Cubit<StateHelper<Profile>> {
           accessToken: requestAuth.accessToken,
           idToken: requestAuth.idToken,
         );
+        final checkAccount = await _profileRepository.checkAccount(googleCredential.email);
+        bool accountIsExist = checkAccount.isNotEmpty;
         Profile? profile;
 
-        if (user != null && user.isAnonymous) {
+        if (user != null && user.isAnonymous && !accountIsExist) {
           user.linkWithCredential(credential);
           profile = await _profileRepository.getMyProfile();
           profile = profile?.copyWith(
@@ -52,8 +54,9 @@ class LoginCubit extends Cubit<StateHelper<Profile>> {
         }
 
         emit(state.copyWith(status: Status.loaded, data: profile));
+      } else {
+        emit(state.copyWith(status: Status.error, message: 'Failed login with google'));
       }
-      emit(state.copyWith(status: Status.error, message: 'Failed login with google'));
     } on FirebaseException catch (e) {
       emit(state.copyWith(status: Status.error, message: e.message ?? ''));
     } catch (e) {

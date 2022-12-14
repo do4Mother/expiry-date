@@ -37,6 +37,10 @@ class ProfileRepository {
     return _auth.signOut();
   }
 
+  Future<List<String>> checkAccount(String email) {
+    return _auth.fetchSignInMethodsForEmail(email);
+  }
+
   Future<void> updateProfile(Profile profile) {
     return profileRef.doc(_auth.currentUser?.uid).set(profile.copyWith(updatedAt: DateTime.now()));
   }
