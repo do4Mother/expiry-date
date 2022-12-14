@@ -11,18 +11,19 @@ class SocialButton extends StatelessWidget {
   });
 
   final String name;
-  final Function() onPressed;
+  final Function()? onPressed;
   final Widget image;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(100),
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: onPressed == null ? colorScheme.primaryContainer.withOpacity(0.5) : colorScheme.primaryContainer,
           boxShadow: [
             BoxShadow(
               color: Colors.grey.shade500.withOpacity(0.8),
