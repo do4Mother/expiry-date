@@ -1,8 +1,10 @@
 import 'package:expiry/models/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class ProfileRepository {
   final _auth = FirebaseAuth.instance;
+  final _googleSignIn = GoogleSignIn();
 
   bool isSignedIn() {
     return _auth.currentUser != null;
@@ -37,5 +39,13 @@ class ProfileRepository {
 
   Future<void> updateProfile(Profile profile) {
     return profileRef.doc(_auth.currentUser?.uid).set(profile.copyWith(updatedAt: DateTime.now()));
+  }
+
+  Future<GoogleSignInAccount?> signInGoogle() {
+    return _googleSignIn.signIn();
+  }
+
+  Future<UserCredential> signInWithCredential(AuthCredential authCredential) {
+    return _auth.signInWithCredential(authCredential);
   }
 }
