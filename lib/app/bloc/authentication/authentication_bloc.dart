@@ -18,6 +18,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, StateHelper<Profile>>
         super(const StateHelper()) {
     on<AuthInitialize>(_authInitialize);
     on<UpdateProfile>(_updateProfile);
+    on<Logout>(_logout);
   }
 
   FutureOr<void> _authInitialize(AuthInitialize event, Emitter<StateHelper> emit) async {
@@ -46,5 +47,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, StateHelper<Profile>>
 
   FutureOr<void> _updateProfile(UpdateProfile event, Emitter<StateHelper<Profile>> emit) {
     state.copyWith(data: event.profile);
+  }
+
+  FutureOr<void> _logout(Logout event, Emitter<StateHelper<Profile>> emit) async {
+    await _profileRepository.logout();
+    add(AuthInitialize());
   }
 }

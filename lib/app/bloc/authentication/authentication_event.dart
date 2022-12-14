@@ -17,3 +17,5 @@ class UpdateProfile extends AuthenticationEvent {
   @override
   List<Object> get props => [profile];
 }
+
+class Logout extends AuthenticationEvent {}
