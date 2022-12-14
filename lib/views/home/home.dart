@@ -3,6 +3,7 @@ import 'package:expiry/views/home/bloc/list_product/list_product_bloc.dart';
 import 'package:expiry/views/home/tabs/chat.dart';
 import 'package:expiry/views/home/tabs/home.dart';
 import 'package:expiry/views/home/tabs/market.dart';
+import 'package:expiry/views/home/tabs/menu.dart';
 import 'package:expiry/views/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
     tabController.addListener(() {
       setState(() {});
     });
@@ -81,6 +82,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: tabController.index,
+          type: BottomNavigationBarType.fixed,
           onTap: (value) {
             tabController.animateTo(value);
           },
@@ -97,6 +99,10 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
               icon: Icon(Icons.chat_bubble_rounded),
               label: 'Chat',
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.more_horiz_rounded),
+              label: 'Menu',
+            ),
           ],
         ),
         body: TabBarView(
@@ -105,6 +111,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
             HomeTab(),
             MarketTab(),
             ChatTab(),
+            MenuTab(),
           ],
         ),
       ),
