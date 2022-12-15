@@ -5,7 +5,6 @@ import 'package:expiry/views/login/cubit/login/login_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../helper/models.dart';
@@ -13,11 +12,9 @@ import '../../../../helper/repositories.dart';
 
 void main() {
   late MockProfileRepository profileRepository;
-  late MockGoogleSignIn mockGoogleSignIn;
   late LoginCubit loginCubit;
 
   setUp(() {
-    mockGoogleSignIn = MockGoogleSignIn();
     profileRepository = MockProfileRepository();
     loginCubit = LoginCubit(profileRepository: profileRepository);
     registerFallbackValue(FakeProfile());
